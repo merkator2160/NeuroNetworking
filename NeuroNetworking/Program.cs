@@ -14,13 +14,16 @@ namespace NeuroNetworking
         [STAThread]
         static void Main()
         {
+            #region Multiple instances sturtup protection
+
             Boolean existed;
             var guid = Marshal.GetTypeLibGuidForAssembly(Assembly.GetExecutingAssembly()).ToString();
             var globalMutex = new Mutex(true, guid, out existed);
             if (!existed)
-            {
-                Application.Exit();
-            }
+                return;
+
+            #endregion
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
