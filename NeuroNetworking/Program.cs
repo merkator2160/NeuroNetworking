@@ -1,30 +1,42 @@
 ﻿using Emgu.CV;
 using Emgu.CV.UI;
 using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace NeuroNetworking
 {
     static class Program
     {
-        private static ImageViewer _viewerForm;
 
         [STAThread]
         static void Main()
         {
+            Boolean existed;
+            var guid = Marshal.GetTypeLibGuidForAssembly(Assembly.GetExecutingAssembly()).ToString();
+            var globalMutex = new Mutex(true, guid, out existed);
+            if (!existed)
+            {
+                Application.Exit();
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            _viewerForm = new ImageViewer();
+
             IniteCupture();
         }
         private static void IniteCupture()
         {
-            var capture = new Capture();
-            Application.Idle += delegate (Object sender, EventArgs e)
+            using (var viewerForm = new ImageViewer())
             {
-                _viewerForm.Image = capture.QueryFrame();
-            };
-            _viewerForm.ShowDialog();
+                var capture = new Capture(1);
+                Application.Idle += (sender, e) =>
+                {
+                    viewerForm.Image = capture.QueryFrame();
+                };
+                viewerForm.ShowDialog();
+            }
         }
     }
 }
