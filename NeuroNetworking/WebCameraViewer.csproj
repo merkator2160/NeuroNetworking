@@ -8,8 +8,8 @@
     <ProjectGuid>{DB117BE9-7B33-42E3-B5B3-927823B76E18}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NeuroNetworking</RootNamespace>
-    <AssemblyName>NeuroNetworking</AssemblyName>
+    <RootNamespace>WebCameraViewer</RootNamespace>
+    <AssemblyName>WebCameraViewer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -83,6 +83,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />

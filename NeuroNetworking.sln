@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuroNetworking", "NeuroNetworking\NeuroNetworking.csproj", "{DB117BE9-7B33-42E3-B5B3-927823B76E18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCameraViewer", "NeuroNetworking\WebCameraViewer.csproj", "{DB117BE9-7B33-42E3-B5B3-927823B76E18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicArduinoCommunications", "BasicArduinoCommunications\BasicArduinoCommunications.csproj", "{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DB117BE9-7B33-42E3-B5B3-927823B76E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB117BE9-7B33-42E3-B5B3-927823B76E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB117BE9-7B33-42E3-B5B3-927823B76E18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

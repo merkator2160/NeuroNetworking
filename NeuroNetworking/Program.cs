@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace NeuroNetworking
+namespace WebCameraViewer
 {
     static class Program
     {
@@ -27,12 +27,9 @@ namespace NeuroNetworking
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            IniteCupture();
-        }
-        private static void IniteCupture()
-        {
             using (var viewerForm = new ImageViewer())
             {
+                viewerForm.Text = "Web camera view";
                 var capture = new Capture(1);
                 Application.Idle += (sender, e) =>
                 {
