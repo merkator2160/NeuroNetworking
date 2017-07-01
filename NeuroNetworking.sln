@@ -7,6 +7,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCameraViewer", "NeuroNet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicArduinoCommunications", "BasicArduinoCommunications\BasicArduinoCommunications.csproj", "{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hardware", "Hardware", "{283BB158-5122-4024-8971-03AFBF6872B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiboAi", "SiboAi\SiboAi.csproj", "{ADADAE4E-E23D-4CF4-88D3-884938A80C08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game learning", "Game learning", "{7AB61A74-7A67-43D7-9777-7BA7AC4EFEA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{633741A1-E63E-43DB-9019-AA0618A9FAB6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{D7FA479B-2979-4FE2-B1A4-CED5B194D445}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		clean-with-scc.bat = clean-with-scc.bat
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntHiveSimulation", "AntHiveSimulation\AntHiveSimulation.csproj", "{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assets", "Assets\Assets.csproj", "{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +40,26 @@ Global
 		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADADAE4E-E23D-4CF4-88D3-884938A80C08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADADAE4E-E23D-4CF4-88D3-884938A80C08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADADAE4E-E23D-4CF4-88D3-884938A80C08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADADAE4E-E23D-4CF4-88D3-884938A80C08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DB117BE9-7B33-42E3-B5B3-927823B76E18} = {633741A1-E63E-43DB-9019-AA0618A9FAB6}
+		{74E83EB9-82FC-489E-A5C9-035B31DAF3A8} = {283BB158-5122-4024-8971-03AFBF6872B0}
+		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE} = {7AB61A74-7A67-43D7-9777-7BA7AC4EFEA8}
+		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC} = {7AB61A74-7A67-43D7-9777-7BA7AC4EFEA8}
 	EndGlobalSection
 EndGlobal

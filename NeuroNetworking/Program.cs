@@ -10,19 +10,11 @@ namespace WebCameraViewer
 {
     static class Program
     {
-
         [STAThread]
         static void Main()
         {
-            #region Multiple instances sturtup protection
-
-            Boolean existed;
-            var guid = Marshal.GetTypeLibGuidForAssembly(Assembly.GetExecutingAssembly()).ToString();
-            var globalMutex = new Mutex(true, guid, out existed);
-            if (!existed)
+            if (CheckOtherInstances())
                 return;
-
-            #endregion
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -37,6 +29,13 @@ namespace WebCameraViewer
                 };
                 viewerForm.ShowDialog();
             }
+        }
+        private static Boolean CheckOtherInstances()
+        {
+            Boolean existed;
+            var guid = Marshal.GetTypeLibGuidForAssembly(Assembly.GetExecutingAssembly()).ToString();
+            var globalMutex = new Mutex(true, guid, out existed);
+            return existed;
         }
     }
 }
