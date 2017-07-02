@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntHiveSimulation", "AntHiv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assets", "Assets\Assets.csproj", "{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
