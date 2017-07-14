@@ -1,11 +1,19 @@
 ﻿using System;
-using System.ComponentModel;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using AntHillSimulation.Core.Messenger.Handlers;
+using AntHillSimulation.Core.Messenger.Messages;
 using AntHillSimulation.Forms;
 using AntHillSimulation.Models;
+using Assets.Icons;
 using MediatR;
+using MediatR.Pipeline;
+using Microsoft.Practices.Unity;
 
 namespace AntHillSimulation.Core
 {
@@ -13,12 +21,14 @@ namespace AntHillSimulation.Core
     {
         private readonly EngineConfig _config;
         private readonly Form _playGroundForm;
+        private readonly IUnityContainer _container;
         private readonly TrayNotificator _trayNotificator;
 
 
         public Engine(EngineConfig config)
         {
             _config = config;
+            _container = ConfigureContainer();
             _trayNotificator = new TrayNotificator(_config.ApplicationName);
             _playGroundForm = new Playground();
         }
@@ -27,6 +37,8 @@ namespace AntHillSimulation.Core
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void Run()
         {
+            UseMediatorAsync();
+
             while(true)
             {
                 try
@@ -49,30 +61,43 @@ namespace AntHillSimulation.Core
         }
         private void DoWork()
         {
-            if(!_playGroundForm.Created)
-            {
-                _playGroundForm.ShowDialog();
-            }
+            //if(!_playGroundForm.Created)
+            //{
+            //    _playGroundForm.ShowDialog();
+            //}
         }
-
-        private void ConfigureMediator()
+        private IUnityContainer ConfigureContainer()
         {
-            var container = new Container(cfg =>
-            {
-                cfg.Scan(scanner =>
-                {
-                    scanner.AssemblyContainingType<Ping>();                                         // Our assembly with requests & handlers
-                    scanner.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<>));        // Handlers with no response
-                    scanner.ConnectImplementationsToTypesClosing(typeof(IRequestHandler<,>));       // Handlers with a response
-                    scanner.ConnectImplementationsToTypesClosing(typeof(IAsyncRequestHandler<>));   // Async handlers with no response
-                    scanner.ConnectImplementationsToTypesClosing(typeof(IAsyncRequestHandler<,>));  // Async Handlers with a response
-                    scanner.ConnectImplementationsToTypesClosing(typeof(INotificationHandler<>));
-                    scanner.ConnectImplementationsToTypesClosing(typeof(IAsyncNotificationHandler<>));
-                });
-                cfg.For<SingleInstanceFactory>().Use<SingleInstanceFactory>(ctx => t => ctx.GetInstance(t));
-                cfg.For<MultiInstanceFactory>().Use<MultiInstanceFactory>(ctx => t => ctx.GetAllInstances(t));
-                cfg.For<IMediator>().Use<Mediator>();
-            });
+            var container = new UnityContainer();
+            ConfigureMediator(container);
+            
+            return container;
+        }
+        private void ConfigureMediator(IUnityContainer container)
+        {
+            container.RegisterInstance<SingleInstanceFactory>(instanceType => container.Resolve(instanceType));
+            container.RegisterInstance<MultiInstanceFactory>(instanceTypeCollection => container.ResolveAll(instanceTypeCollection));
+            container.RegisterType<IMediator, Mediator>();
+
+            //Pipeline
+            container.RegisterType(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+            container.RegisterType(typeof(IPipelineBehavior<,>), typeof(RequestPostProcessorBehavior<,>));
+            //container.RegisterType(typeof(IPipelineBehavior<,>), typeof(GenericPipelineBehavior<,>));
+            //container.RegisterType(typeof(IRequestPreProcessor<>), typeof(GenericRequestPreProcessor<>));
+            //container.RegisterType(typeof(IRequestPostProcessor<,>), typeof(GenericRequestPostProcessor<,>));
+
+            var typesForExport = typeof(IMediator).GetTypeInfo().Assembly.ExportedTypes
+                .Where(p => p.GetTypeInfo().IsClass)
+                .ToArray();
+            container.RegisterTypes(typesForExport);
+            
+            container.RegisterType(typeof(INotificationHandler<FirstMessage>), typeof(MessageHandler));
+        }
+        private async void UseMediatorAsync()
+        {
+            var mediator = _container.Resolve<IMediator>();
+
+            await mediator.Publish(new FirstMessage());
         }
     }
 }

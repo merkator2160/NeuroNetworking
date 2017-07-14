@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using Assets.Icons;
 
 namespace AntHillSimulation.Forms
 {
@@ -7,6 +8,8 @@ namespace AntHillSimulation.Forms
         public Playground()
         {
             InitializeComponent();
+
+            Icon = Icons.InsectsAnt;
         }
     }
 }

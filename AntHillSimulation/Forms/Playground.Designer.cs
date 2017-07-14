@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Playground));
             this.Display = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.Display)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +47,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 461);
             this.Controls.Add(this.Display);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(700, 500);
             this.MinimumSize = new System.Drawing.Size(700, 500);
