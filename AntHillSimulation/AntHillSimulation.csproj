@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mediator.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mediator.Net.1.1.3\lib\net45\Mediator.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -72,8 +75,9 @@
     <Compile Include="Core\CommandProcessor.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\ManualController.cs" />
-    <Compile Include="Core\Messenger\Handlers\MessageHandler.cs" />
-    <Compile Include="Core\Messenger\Messages\FirstMessage.cs" />
+    <Compile Include="Core\Messenger\Commands\ShowPlaygroundCommand.cs" />
+    <Compile Include="Core\Messenger\Handlers\FirstCommandHandler.cs" />
+    <Compile Include="Core\Messenger\Commands\FirstCommand.cs" />
     <Compile Include="Core\TrayNotificator.cs" />
     <Compile Include="Forms\Playground.cs">
       <SubType>Form</SubType>
@@ -81,7 +85,9 @@
     <Compile Include="Forms\Playground.Designer.cs">
       <DependentUpon>Playground.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\PlaygroundConfig.cs" />
     <Compile Include="Models\EngineConfig.cs" />
+    <Compile Include="Models\TrayNotificatorConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Playground.resx">
@@ -116,12 +122,10 @@
       <Project>{54d9a3d9-1bbc-4eee-986c-dbaf5a6cd3cc}</Project>
       <Name>Assets</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MediatR\MediatR.csproj">
-      <Project>{b56e48c1-00bb-479c-8f08-6d4979a6b5a3}</Project>
-      <Name>MediatR</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Messenger\Messages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
