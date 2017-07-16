@@ -24,9 +24,6 @@ namespace AntHillSimulation.Core
                 BalloonTipTitle = config.BalloonTitle
             };
             _trayIcon.DoubleClick += TrayIconOnDoubleClick;
-            _trayIcon.Click += TrayIconOnClick;
-            _trayIcon.MouseClick += TrayIconOnMouseClick;
-            _trayIcon.MouseDoubleClick += TrayIconOnMouseDoubleClick;
         }
         ~TrayNotificator()
         {
@@ -46,22 +43,10 @@ namespace AntHillSimulation.Core
 
 
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
-        private void TrayIconOnClick(Object sender, EventArgs eventArgs)
-        {
-            throw new NotImplementedException();
-        }
         private void TrayIconOnDoubleClick(object sender, EventArgs eventArgs)
         {
             _trayIcon.ShowBalloonTip(_config.BaloonLifetime, _config.BalloonTitle, "Test", ToolTipIcon.None);
             //await _mediator.SendAsync(new ShowPlaygroundCommand());
-        }
-        private void TrayIconOnMouseClick(Object sender, MouseEventArgs mouseEventArgs)
-        {
-            throw new NotImplementedException();
-        }
-        private void TrayIconOnMouseDoubleClick(Object sender, MouseEventArgs mouseEventArgs)
-        {
-            throw new NotImplementedException();
         }
 
         // IDisposable ////////////////////////////////////////////////////////////////////////////
