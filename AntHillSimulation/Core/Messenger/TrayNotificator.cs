@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using AntHillSimulation.Core.Config;
+using AntHillSimulation.Core.Messenger.Enums;
 using Assets.Icons;
 
 namespace AntHillSimulation.Core.Messenger
@@ -35,7 +36,7 @@ namespace AntHillSimulation.Core.Messenger
         }
 
 
-        // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+        // INotificator ///////////////////////////////////////////////////////////////////////////
         public void ShowMessage(String message)
         {
             _trayIcon.ShowBalloonTip(_config.Tray.BalloonLifetime, _config.Tray.BalloonTitle, message, ToolTipIcon.None);
@@ -44,6 +45,7 @@ namespace AntHillSimulation.Core.Messenger
         {
             _trayIcon.ShowBalloonTip(_config.Tray.BalloonLifetime, _config.Tray.BalloonTitle, message, ToolTipIcon.Error);
         }
+        
         private ContextMenu ConfigureMenu()
         {
             var menu = new ContextMenu();
@@ -59,8 +61,7 @@ namespace AntHillSimulation.Core.Messenger
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
         private void TrayIconOnDoubleClick(object sender, EventArgs eventArgs)
         {
-            _trayIcon.ShowBalloonTip(_config.Tray.BalloonLifetime, _config.Tray.BalloonTitle, "Test", ToolTipIcon.None);
-            _communicationBus.Send("FormsBus", null);
+            _communicationBus.Send(BusType.Forms, null);
         }
         private void ExitMenuOnClick(object sender, EventArgs eventArgs)
         {

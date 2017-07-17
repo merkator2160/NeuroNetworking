@@ -77,6 +77,7 @@
     <Compile Include="Core\FormsManager.cs" />
     <Compile Include="Core\ManualController.cs" />
     <Compile Include="Core\Messenger\BasicBus.cs" />
+    <Compile Include="Core\Messenger\Enums\BusType.cs" />
     <Compile Include="Core\Messenger\ICommunicationBus.cs" />
     <Compile Include="Core\Messenger\INotificator.cs" />
     <Compile Include="Core\Messenger\Messages\BaseMessage.cs" />
@@ -128,9 +129,7 @@
       <Name>Assets</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

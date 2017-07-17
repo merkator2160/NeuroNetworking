@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using AntHillSimulation.Core.Config;
 using AntHillSimulation.Core.Messenger;
+using AntHillSimulation.Core.Messenger.Enums;
 using AntHillSimulation.Forms;
 using Assets.Icons;
 
@@ -26,9 +27,9 @@ namespace AntHillSimulation.Core
         public void Run()
         {
             _playgroundForm = new Playground(_config);
-            _communicationBus.Subscribe("FormsBus", ShowPlaygroundForm);
+            _communicationBus.Subscribe(BusType.Forms, ShowPlaygroundForm);
         }
-        private void ShowPlaygroundForm(String busName, Object data)
+        private void ShowPlaygroundForm(BusType type, Object data)
         {
             if (!_playgroundForm.Created)
                 _playgroundForm.ShowDialog();
