@@ -1,6 +1,4 @@
-﻿using AntHillSimulation.Core.Messenger.Commands;
-using AntHillSimulation.Forms;
-using AntHillSimulation.Models;
+﻿using AntHillSimulation.Forms;
 using Assets.Icons;
 using Mediator.Net;
 using Mediator.Net.Context;
@@ -10,46 +8,42 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AntHillSimulation.Core.Config;
+using AntHillSimulation.Core.Messenger;
 
 namespace AntHillSimulation.Core
 {
-    internal class Engine : ICommandHandler<ShowPlaygroundCommand>
+    internal class Engine : IDisposable
     {
-        private readonly EngineConfig _config;
-        private readonly Form _playGroundForm;
-        private readonly IUnityContainer _container;
-        private readonly TrayNotificator _trayNotificator;
-        private readonly IMediator _mediator;
+        private readonly ApplicationConfig _config;
+        private readonly INotificator _notificator;
+        private readonly ICommunicationBus _communicationBus;
+        private Boolean _disposed;
+        private Thread _workerThread;
 
 
-        public Engine(EngineConfig config)
+        public Engine(ApplicationConfig config, INotificator notificator, ICommunicationBus communicationBus)
         {
             _config = config;
-            _container = ConfigureContainer();
-            _mediator = new MediatorBuilder().RegisterHandlers(typeof(Engine).Assembly).Build();
-            _trayNotificator = new TrayNotificator(_mediator, new TrayNotificatorConfig()
-            {
-                TrayIcon = Icons.InsectsAnt,
-                BalloonTitle = _config.ApplicationName,
-                BaloonLifetime = 500
-            });
-            _playGroundForm = new Playground(new PlaygroundConfig()
-            {
-                Title = _config.ApplicationName,
-                Icon = Icons.InsectsAnt
-            });
+            _notificator = notificator;
+            _communicationBus = communicationBus;
+            
+            _workerThread = new Thread(DoWork);
         }
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void Run()
         {
+            _workerThread?.Start();
+        }
+        private void DoWork()
+        {
             while (true)
             {
                 try
                 {
-                    DoWork();
-                    Thread.Sleep(_config.SimulationSpeed);
+                    Thread.Sleep(_config.Engine.SimulationSpeed);
                 }
                 catch (ThreadAbortException)
                 {
@@ -57,32 +51,40 @@ namespace AntHillSimulation.Core
                 }
                 catch (Exception ex)
                 {
-                    _trayNotificator.ShowError(ex.Message);
+                    _notificator.ShowError(ex.Message);
 #if DEBUG
                     throw;
 #endif
                 }
             }
         }
-        private void DoWork()
-        {
-            //if(!_playGroundForm.Created)
-            //{
-            //    _playGroundForm.ShowDialog();
-            //}
-        }
-        private IUnityContainer ConfigureContainer()
-        {
-            var container = new UnityContainer();
+        
+        
 
-            return container;
-        }
-        public Task Handle(ReceiveContext<ShowPlaygroundCommand> context)
+        // IDisposable ////////////////////////////////////////////////////////////////////////////
+        public void Dispose()
         {
-            return Task.Run(() =>
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(Boolean disposing)
+        {
+            if (!_disposed)
             {
-                _playGroundForm.ShowDialog();
-            });
+                ReleaseUnmanagedResources();
+                if (disposing)
+                    ReleaseManagedResources();
+
+                _disposed = true;
+            }
+        }
+        private void ReleaseUnmanagedResources()
+        {
+            // We didn't have its yet.
+        }
+        private void ReleaseManagedResources()
+        {
+            _workerThread?.Abort();
         }
     }
 }

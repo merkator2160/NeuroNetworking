@@ -1,0 +1,17 @@
+﻿{
+  "Name": "Ant hill simulator",
+  "IconName": "InsectsAnt",
+  "Engine":
+  {
+    "SimulationSpeed": 100
+  },
+  "Tray":
+  {
+    "BalloonTitle": "Ant hill simulator",
+    "BalloonLifetime": 500
+  },
+  "Playground":
+  {
+    "Title": "Ant hill simulator"
+  }
+}

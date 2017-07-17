@@ -72,22 +72,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\CommandProcessor.cs" />
+    <Compile Include="Core\Config\ApplicationConfig.cs" />
     <Compile Include="Core\Engine.cs" />
+    <Compile Include="Core\FormsManager.cs" />
     <Compile Include="Core\ManualController.cs" />
-    <Compile Include="Core\Messenger\Commands\ShowPlaygroundCommand.cs" />
-    <Compile Include="Core\Messenger\Handlers\FirstCommandHandler.cs" />
-    <Compile Include="Core\Messenger\Commands\FirstCommand.cs" />
-    <Compile Include="Core\TrayNotificator.cs" />
+    <Compile Include="Core\Messenger\BasicBus.cs" />
+    <Compile Include="Core\Messenger\ICommunicationBus.cs" />
+    <Compile Include="Core\Messenger\INotificator.cs" />
+    <Compile Include="Core\Messenger\Messages\BaseMessage.cs" />
+    <Compile Include="Core\Messenger\TrayNotificator.cs" />
     <Compile Include="Forms\Playground.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Playground.Designer.cs">
       <DependentUpon>Playground.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlaygroundConfig.cs" />
-    <Compile Include="Models\EngineConfig.cs" />
-    <Compile Include="Models\TrayNotificatorConfig.cs" />
+    <Compile Include="Core\Config\PlaygroundConfig.cs" />
+    <Compile Include="Core\Config\EngineConfig.cs" />
+    <Compile Include="Core\Config\TrayNotificatorConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\Playground.resx">
@@ -103,6 +105,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ApplicationConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -124,7 +129,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Messenger\Messages\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

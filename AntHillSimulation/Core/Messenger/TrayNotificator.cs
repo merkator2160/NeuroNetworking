@@ -1,27 +1,31 @@
-﻿using AntHillSimulation.Models;
-using Mediator.Net;
-using System;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+using AntHillSimulation.Core.Config;
+using Assets.Icons;
 
-namespace AntHillSimulation.Core
+namespace AntHillSimulation.Core.Messenger
 {
-    public class TrayNotificator : IDisposable
+    internal class TrayNotificator : IDisposable, INotificator
     {
         private readonly NotifyIcon _trayIcon;
-        private readonly IMediator _mediator;
-        private readonly TrayNotificatorConfig _config;
+        private readonly ApplicationConfig _config;
+        private readonly ICommunicationBus _communicationBus;
         private Boolean _disposed;
 
 
-        public TrayNotificator(IMediator mediator, TrayNotificatorConfig config)
+        public TrayNotificator(ICommunicationBus communicationBus, ApplicationConfig config)
         {
-            _mediator = mediator;
+            _communicationBus = communicationBus;
             _config = config;
+
+            var icon = Icons.ResourceManager.GetObject(config.IconName) as Icon;
             _trayIcon = new NotifyIcon()
             {
-                Icon = config.TrayIcon,
+                Icon = icon,
                 Visible = true,
-                BalloonTipTitle = config.BalloonTitle
+                BalloonTipTitle = config.Tray.BalloonTitle,
+                ContextMenu = ConfigureMenu()
             };
             _trayIcon.DoubleClick += TrayIconOnDoubleClick;
         }
@@ -34,20 +38,35 @@ namespace AntHillSimulation.Core
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void ShowMessage(String message)
         {
-            _trayIcon.ShowBalloonTip(_config.BaloonLifetime, _config.BalloonTitle, message, ToolTipIcon.None);
+            _trayIcon.ShowBalloonTip(_config.Tray.BalloonLifetime, _config.Tray.BalloonTitle, message, ToolTipIcon.None);
         }
         public void ShowError(String message)
         {
-            _trayIcon.ShowBalloonTip(_config.BaloonLifetime, _config.BalloonTitle, message, ToolTipIcon.Error);
+            _trayIcon.ShowBalloonTip(_config.Tray.BalloonLifetime, _config.Tray.BalloonTitle, message, ToolTipIcon.Error);
+        }
+        private ContextMenu ConfigureMenu()
+        {
+            var menu = new ContextMenu();
+
+            var exitMenu = new MenuItem("Exit");
+            exitMenu.Click += ExitMenuOnClick;
+            menu.MenuItems.Add(exitMenu);
+
+            return menu;
         }
 
 
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
         private void TrayIconOnDoubleClick(object sender, EventArgs eventArgs)
         {
-            _trayIcon.ShowBalloonTip(_config.BaloonLifetime, _config.BalloonTitle, "Test", ToolTipIcon.None);
-            //await _mediator.SendAsync(new ShowPlaygroundCommand());
+            _trayIcon.ShowBalloonTip(_config.Tray.BalloonLifetime, _config.Tray.BalloonTitle, "Test", ToolTipIcon.None);
+            _communicationBus.Send("FormsBus", null);
         }
+        private void ExitMenuOnClick(object sender, EventArgs eventArgs)
+        {
+            Application.Exit();
+        }
+
 
         // IDisposable ////////////////////////////////////////////////////////////////////////////
         public void Dispose()
