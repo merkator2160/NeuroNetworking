@@ -24,12 +24,12 @@ namespace AntHillSimulation.Core
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-        public void Run()
+        public void Initialyze()
         {
             _playgroundForm = new Playground(_config);
-            _communicationBus.Subscribe(BusType.Forms, ShowPlaygroundForm);
+            _communicationBus.Subscribe<Object>(Buses.Tray.ToString(), ShowPlaygroundForm);
         }
-        private void ShowPlaygroundForm(BusType type, Object data)
+        private void ShowPlaygroundForm(String busName, Object data)
         {
             if (!_playgroundForm.Created)
                 _playgroundForm.ShowDialog();

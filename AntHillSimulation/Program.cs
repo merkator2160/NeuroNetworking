@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using AntHillSimulation.Core;
 using AntHillSimulation.Core.Config;
 using AntHillSimulation.Core.Messenger;
+using AntHillSimulation.Core.Messenger.Enums;
 using Assets.Icons;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
@@ -30,7 +31,8 @@ namespace AntHillSimulation
                 ConfigureContainer(config);
 
                 _container.Resolve<Engine>().Run();
-                _container.Resolve<FormsManager>().Run();
+                _container.Resolve<FormsManager>().Initialyze();
+                _container.Resolve<ICommunicationBus>().Subscribe<Object>(Buses.System.ToString(), OnTrayExitButtonCLick);
 
                 Application.ApplicationExit += OnApplicationExit;
                 Application.Run();
@@ -74,7 +76,12 @@ namespace AntHillSimulation
             _container.RegisterType<FormsManager>(new ContainerControlledLifetimeManager());
         }
 
+
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
+        private static void OnTrayExitButtonCLick(String arg1, Object arg2)
+        {
+            Application.Exit();
+        }
         private static void OnApplicationExit(object sender, EventArgs eventArgs)
         {
             _container?.Dispose();

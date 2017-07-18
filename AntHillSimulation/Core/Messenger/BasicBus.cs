@@ -17,69 +17,22 @@ namespace AntHillSimulation.Core.Messenger
 
 
         // ICommunicationBus //////////////////////////////////////////////////////////////////////
-        public void Subscribe(String busName, Action<String, Object> action)
+        public void Subscribe<T>(String busName, Action<String, T> action)
         {
-            if(busName == null)
-                throw new ArgumentNullException($"{nameof(busName)} is null");
-
-            if (action == null)
-                throw new ArgumentNullException($"{nameof(action)} is null");
-
             _buses.AddHandler(busName, action);
         }
-        public void Subscribe(BusType busType, Action<BusType, Object> action)
+        public void Unsubscribe<T>(String busName, Action<String, T> action)
         {
-            _buses.AddHandler(busType.ToString(), action);
-        }
-        public void Subscribe<T>(BusType busType, Action<BusType, T> action)
-        {
-            _buses.AddHandler(busType, action);
-        }
-        public void Unsubscribe(String busName, Action<String, Object> action)
-        {
-            if (busName == null)
-                throw new ArgumentNullException($"{nameof(busName)} is null");
-
             if (action == null)
                 throw new ArgumentNullException($"{nameof(action)} is null");
 
             _buses.RemoveHandler(busName, action);
         }
-        public void Unsubscribe(BusType busType, Action<BusType, Object> action)
+        public void Send<T>(String busName, T message)
         {
-            if (action == null)
-                throw new ArgumentNullException($"{nameof(action)} is null");
-
-            _buses.RemoveHandler(busType, action);
-        }
-        public void Unsubscribe<T>(BusType busType, Action<BusType, T> action)
-        {
-            if (action == null)
-                throw new ArgumentNullException($"{nameof(action)} is null");
-
-            _buses.RemoveHandler(busType, action);
-        }
-        public void Send(String busName, Object message)
-        {
-            if (busName == null)
-                throw new ArgumentNullException($"{nameof(busName)} is null");
-
             var specifyedBus = _buses[busName];
-            if(specifyedBus != null)
+            if (specifyedBus != null)
                 _buses[busName].DynamicInvoke(busName, message);
-        }
-        public void Send(BusType busType, Object message)
-        {
-            var busTypeAsStr = busType.ToString();
-            var specifyedBus = _buses[busTypeAsStr];
-            if (specifyedBus != null)
-                _buses[busType].DynamicInvoke(busTypeAsStr, message);
-        }
-        public void Send<T>(BusType busType, T message)
-        {
-            var specifyedBus = _buses[busType];
-            if (specifyedBus != null)
-                _buses[busType].DynamicInvoke(busType, message);
         }
 
 

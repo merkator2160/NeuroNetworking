@@ -61,11 +61,11 @@ namespace AntHillSimulation.Core.Messenger
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
         private void TrayIconOnDoubleClick(object sender, EventArgs eventArgs)
         {
-            _communicationBus.Send(BusType.Forms, null);
+            _communicationBus.Send<Object>(Buses.Tray.ToString(), null);
         }
         private void ExitMenuOnClick(object sender, EventArgs eventArgs)
         {
-            Application.Exit();
+            _communicationBus.Send<Object>(Buses.System.ToString(), null);
         }
 
 
