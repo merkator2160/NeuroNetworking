@@ -31,8 +31,7 @@ namespace AntHillSimulation.Core
         private void OnPlaygroundFormKeyDown(String busName, KeyEventArgs data)
         {
 
-            Graphics.FromImage(_playgroundForm.Display.Image).FillEllipse(Brushes.Crimson, 50, 50, 19, 19);
-            _playgroundForm.Display.Refresh();
+            
         }
     }
 }

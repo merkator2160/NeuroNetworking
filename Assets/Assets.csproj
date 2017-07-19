@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraficPrimitives\Circle.cs" />
+    <Compile Include="GraficPrimitives\IGraficPrimtive.cs" />
     <Compile Include="Icons\Icons.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

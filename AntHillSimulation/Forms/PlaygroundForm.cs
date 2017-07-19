@@ -20,10 +20,8 @@ namespace AntHillSimulation.Forms
 
             _config = config;
             _communicationbus = communicationbus;
-
-            var canvas = new Bitmap(Display.Width, Display.Height);
-            Display.Image = canvas;
-            Renderer = new ImageRenderer(canvas);
+            
+            Renderer = new ImageRenderer(Display);
 
             Text = $"{config.Name} - Playground";
             Icon = Icons.ResourceManager.GetObject(config.IconName) as Icon;
