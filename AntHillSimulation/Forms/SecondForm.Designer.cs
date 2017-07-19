@@ -28,24 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TextArea = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // TextArea
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(153, 136);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.TextArea.Location = new System.Drawing.Point(12, 12);
+            this.TextArea.Multiline = true;
+            this.TextArea.Name = "TextArea";
+            this.TextArea.Size = new System.Drawing.Size(153, 136);
+            this.TextArea.TabIndex = 0;
             // 
             // SecondForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.TextArea);
             this.Name = "SecondForm";
             this.Text = "SecondForm";
             this.ResumeLayout(false);
@@ -55,6 +54,6 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        public System.Windows.Forms.TextBox TextArea;
     }
 }

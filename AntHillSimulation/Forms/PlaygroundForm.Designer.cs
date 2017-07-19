@@ -1,6 +1,6 @@
 ﻿namespace AntHillSimulation.Forms
 {
-    partial class Playground
+    partial class PlaygroundForm
     {
         /// <summary>
         /// Required designer variable.
@@ -52,6 +52,7 @@
             this.MinimumSize = new System.Drawing.Size(700, 500);
             this.Name = "Playground";
             this.Text = "Playground";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Playground_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.Display)).EndInit();
             this.ResumeLayout(false);
 
@@ -62,4 +63,3 @@
         private System.Windows.Forms.PictureBox Display;
     }
 }
-

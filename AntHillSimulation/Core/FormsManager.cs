@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using AntHillSimulation.Core.Config;
 using AntHillSimulation.Core.Messenger;
@@ -13,23 +14,40 @@ namespace AntHillSimulation.Core
         private readonly ApplicationConfig _config;
         private readonly ICommunicationBus _communicationBus;
 
-        private Form _playgroundForm;
+        private readonly PlaygroundForm _playgroundForm;
+        private readonly SecondForm _secondForm;
 
 
-        public FormsManager(ApplicationConfig config, ICommunicationBus communicationBus)
+        public FormsManager(ApplicationConfig config, 
+            ICommunicationBus communicationBus,
+            PlaygroundForm playgroundForm,
+            SecondForm secondForm)
         {
             _config = config;
             _communicationBus = communicationBus;
+            _playgroundForm = playgroundForm;
+            _secondForm = secondForm;
         }
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void Initialyze()
         {
-            _playgroundForm = new Playground(_config);
-            _communicationBus.Subscribe<Object>(Buses.Tray.ToString(), ShowPlaygroundForm);
+            _communicationBus.Subscribe<Object>(Buses.TrayIconDoubleClick.ToString(), OnTrayIconDoubleClick);
+
+            _playgroundForm.Show();
         }
-        private void ShowPlaygroundForm(String busName, Object data)
+
+
+        // EVENTS /////////////////////////////////////////////////////////////////////////////////
+        public void ShowMainForm()
+        {
+            if (!_playgroundForm.Created)
+            {
+                _playgroundForm.Show();
+            }
+        }
+        private void OnTrayIconDoubleClick(String busName, Object data)
         {
             if (!_playgroundForm.Created)
                 _playgroundForm.ShowDialog();

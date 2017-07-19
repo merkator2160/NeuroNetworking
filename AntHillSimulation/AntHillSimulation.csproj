@@ -75,18 +75,18 @@
     <Compile Include="Core\Config\ApplicationConfig.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\FormsManager.cs" />
+    <Compile Include="Core\ImageRenderer.cs" />
     <Compile Include="Core\ManualController.cs" />
     <Compile Include="Core\Messenger\BasicBus.cs" />
     <Compile Include="Core\Messenger\Enums\Buses.cs" />
     <Compile Include="Core\Messenger\ICommunicationBus.cs" />
     <Compile Include="Core\Messenger\INotificator.cs" />
-    <Compile Include="Core\Messenger\Messages\BaseMessage.cs" />
     <Compile Include="Core\Messenger\TrayNotificator.cs" />
-    <Compile Include="Forms\Playground.cs">
+    <Compile Include="Forms\PlaygroundForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Playground.Designer.cs">
-      <DependentUpon>Playground.cs</DependentUpon>
+    <Compile Include="Forms\PlaygroundForm.Designer.cs">
+      <DependentUpon>PlaygroundForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Core\Config\PlaygroundConfig.cs" />
     <Compile Include="Core\Config\EngineConfig.cs" />
@@ -99,8 +99,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\Playground.resx">
-      <DependentUpon>Playground.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\PlaygroundForm.resx">
+      <DependentUpon>PlaygroundForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SecondForm.resx">
       <DependentUpon>SecondForm.cs</DependentUpon>
@@ -138,7 +138,9 @@
       <Name>Assets</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Core\Messenger\Messages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

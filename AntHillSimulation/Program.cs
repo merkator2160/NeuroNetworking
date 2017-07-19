@@ -8,6 +8,7 @@ using AntHillSimulation.Core;
 using AntHillSimulation.Core.Config;
 using AntHillSimulation.Core.Messenger;
 using AntHillSimulation.Core.Messenger.Enums;
+using AntHillSimulation.Forms;
 using Assets.Icons;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
@@ -32,7 +33,7 @@ namespace AntHillSimulation
 
                 _container.Resolve<Engine>().Run();
                 _container.Resolve<FormsManager>().Initialyze();
-                _container.Resolve<ICommunicationBus>().Subscribe<Object>(Buses.System.ToString(), OnTrayExitButtonCLick);
+                _container.Resolve<ICommunicationBus>().Subscribe<Object>(Buses.TrayMenuExitCLick.ToString(), OnTrayExitButtonCLick);
 
                 Application.ApplicationExit += OnApplicationExit;
                 Application.Run();
@@ -73,7 +74,14 @@ namespace AntHillSimulation
             _container.RegisterType<ICommunicationBus, BasicBus>(new ContainerControlledLifetimeManager());
             _container.RegisterType<Engine>(new ContainerControlledLifetimeManager());
             _container.RegisterType<INotificator, TrayNotificator>(new ContainerControlledLifetimeManager());
+
+            RegisterForms();
+        }
+        private static void RegisterForms()
+        {
             _container.RegisterType<FormsManager>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<PlaygroundForm>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<SecondForm>(new ContainerControlledLifetimeManager());
         }
 
 
