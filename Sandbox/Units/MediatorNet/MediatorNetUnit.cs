@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Reflection;
 using Mediator.Net;
 using Mediator.Net.Unity;
 using Microsoft.Practices.Unity;
 using Sandbox.Units.Mediators.Messages;
 
-namespace Sandbox.Units.Mediators
+namespace Sandbox.Units.MediatorNet
 {
     public static class MediatorNetUnit
     {

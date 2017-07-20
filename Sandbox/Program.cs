@@ -1,6 +1,7 @@
 ﻿using System;
 using Sandbox.Units;
 using Sandbox.Units.Mediators;
+using Sandbox.Units.MvvmLight;
 
 namespace Sandbox
 {
@@ -8,7 +9,7 @@ namespace Sandbox
     {
         static void Main(string[] args)
         {
-            MediatorNetUnit.Run();
+            MvvmLightMediator.Run();
             Console.ReadKey();
         }
     }

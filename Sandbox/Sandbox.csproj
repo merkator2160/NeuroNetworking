@@ -73,6 +73,15 @@
       <HintPath>..\packages\AForge.Vision.2.2.5\lib\AForge.Vision.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+    </Reference>
     <Reference Include="Mediator.Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mediator.Net.1.1.3\lib\net45\Mediator.Net.dll</HintPath>
     </Reference>
@@ -93,6 +102,10 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -103,15 +116,17 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Units\Mediators\Handlers\GuidCommandHandler.cs" />
-    <Compile Include="Units\Mediators\Handlers\EventHandlerOne.cs" />
-    <Compile Include="Units\Mediators\Handlers\EventHandlerTwo.cs" />
-    <Compile Include="Units\Mediators\Handlers\RequestHandler.cs" />
-    <Compile Include="Units\Mediators\MediatorNetUnit.cs" />
-    <Compile Include="Units\Mediators\Messages\GuidCommand.cs" />
-    <Compile Include="Units\Mediators\Messages\EventMessage.cs" />
-    <Compile Include="Units\Mediators\Messages\GuidRequest.cs" />
-    <Compile Include="Units\Mediators\Messages\GuidResponse.cs" />
+    <Compile Include="Units\MediatorNet\Handlers\GuidCommandHandler.cs" />
+    <Compile Include="Units\MediatorNet\Handlers\EventHandlerOne.cs" />
+    <Compile Include="Units\MediatorNet\Handlers\EventHandlerTwo.cs" />
+    <Compile Include="Units\MediatorNet\Handlers\RequestHandler.cs" />
+    <Compile Include="Units\MediatorNet\MediatorNetUnit.cs" />
+    <Compile Include="Units\MediatorNet\Messages\GuidCommand.cs" />
+    <Compile Include="Units\MediatorNet\Messages\EventMessage.cs" />
+    <Compile Include="Units\MediatorNet\Messages\GuidRequest.cs" />
+    <Compile Include="Units\MediatorNet\Messages\GuidResponse.cs" />
+    <Compile Include="Units\MvvmLight\Handler.cs" />
+    <Compile Include="Units\MvvmLight\MvvmLightMediator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
