@@ -1,23 +1,23 @@
-﻿using System;
+﻿using AntHillSimulation.Core;
+using AntHillSimulation.Core.Config;
+using AntHillSimulation.Core.Messenger;
+using AntHillSimulation.Forms;
+using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using AntHillSimulation.Core;
-using AntHillSimulation.Core.Config;
-using AntHillSimulation.Core.Messenger;
-using AntHillSimulation.Core.Messenger.Enums;
-using AntHillSimulation.Forms;
-using Assets.Icons;
-using Microsoft.Practices.Unity;
-using Newtonsoft.Json;
 
 namespace AntHillSimulation
 {
     static class Program
     {
         private static IUnityContainer _container;
+        private static ApplicationConfig _config;
 
 
         [STAThread]
@@ -28,12 +28,12 @@ namespace AntHillSimulation
 
             if (CheckAnyOtherInstances())
             {
-                var config = GetConfig();
-                ConfigureContainer(config);
+                _config = GetConfig();
+                _container = ConfigureContainer(_config);
 
                 _container.Resolve<Engine>().Run();
-                _container.Resolve<FormsManager>().Initialyze();
-                _container.Resolve<ICommunicationBus>().Subscribe<Object>(Buses.TrayMenuExitCLick.ToString(), OnTrayExitButtonCLick);
+
+                _container.Resolve<FormsManager>().ShowPlaygroundForm();
 
                 Application.ApplicationExit += OnApplicationExit;
                 Application.Run();
@@ -45,7 +45,7 @@ namespace AntHillSimulation
 
             Boolean created;
             var mutexObj = new Mutex(true, guid, out created);
-            if(!created)
+            if (!created)
             {
                 MessageBox.Show("Application instance already exist");
             }
@@ -66,30 +66,23 @@ namespace AntHillSimulation
                 }
             }
         }
-        private static void ConfigureContainer(ApplicationConfig config)
+        private static IUnityContainer ConfigureContainer(ApplicationConfig config)
         {
-            _container = new UnityContainer();
-            _container.RegisterInstance(config);
+            var container = new UnityContainer();
+            container.RegisterInstance(config);
 
-            _container.RegisterType<ICommunicationBus, BasicBus>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<Engine>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<INotificator, TrayNotificator>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMessenger, Messenger>(new ContainerControlledLifetimeManager());
+            container.RegisterType<Engine>(new ContainerControlledLifetimeManager());
+            container.RegisterType<INotificator, TrayNotificator>(new ContainerControlledLifetimeManager());
+            container.RegisterType<FormsManager>(new ContainerControlledLifetimeManager());
+            container.RegisterType<PlaygroundForm>();
+            container.RegisterType<SecondForm>();
 
-            RegisterForms();
-        }
-        private static void RegisterForms()
-        {
-            _container.RegisterType<FormsManager>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<PlaygroundForm>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<SecondForm>(new ContainerControlledLifetimeManager());
+            return container;
         }
 
 
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
-        private static void OnTrayExitButtonCLick(String arg1, Object arg2)
-        {
-            Application.Exit();
-        }
         private static void OnApplicationExit(object sender, EventArgs eventArgs)
         {
             _container?.Dispose();

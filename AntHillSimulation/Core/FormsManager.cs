@@ -1,56 +1,53 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using AntHillSimulation.Core.Config;
-using AntHillSimulation.Core.Messenger;
-using AntHillSimulation.Core.Messenger.Enums;
+﻿using AntHillSimulation.Core.Config;
+using AntHillSimulation.Core.Messenger.Messages;
 using AntHillSimulation.Forms;
-using Assets.Icons;
+using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Practices.Unity;
 
 namespace AntHillSimulation.Core
 {
     internal class FormsManager
     {
         private readonly ApplicationConfig _config;
-        private readonly ICommunicationBus _communicationBus;
+        private readonly IMessenger _communicationBus;
+        private readonly IUnityContainer _container;
 
-        private readonly PlaygroundForm _playgroundForm;
-        private readonly SecondForm _secondForm;
+        private PlaygroundForm _playgroundForm;
+        private SecondForm _secondForm;
 
 
-        public FormsManager(ApplicationConfig config, 
-            ICommunicationBus communicationBus,
-            PlaygroundForm playgroundForm,
-            SecondForm secondForm)
+        public FormsManager(ApplicationConfig config, IMessenger communicationBus, IUnityContainer container)
         {
             _config = config;
             _communicationBus = communicationBus;
-            _playgroundForm = playgroundForm;
-            _secondForm = secondForm;
+            _container = container;
+            _communicationBus.Register<TrayIconClickMessage>(this, OnTrayIconDoubleClick);
         }
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-        public void Initialyze()
+        public void ShowPlaygroundForm()
         {
-            _communicationBus.Subscribe<Object>(Buses.TrayIconDoubleClick.ToString(), OnTrayIconDoubleClick);
+            if (_playgroundForm != null && !_playgroundForm.IsDisposed)
+                return;
 
+            _playgroundForm = _container.Resolve<PlaygroundForm>();
             _playgroundForm.Show();
+        }
+        public void ShowSecondForm()
+        {
+            if (_secondForm != null && !_secondForm.IsDisposed)
+                return;
+
+            _secondForm = _container.Resolve<SecondForm>();
+            _secondForm.Show();
         }
 
 
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
-        public void ShowMainForm()
+        private void OnTrayIconDoubleClick(TrayIconClickMessage message)
         {
-            if (!_playgroundForm.Created)
-            {
-                _playgroundForm.Show();
-            }
-        }
-        private void OnTrayIconDoubleClick(String busName, Object data)
-        {
-            if (!_playgroundForm.Created)
-                _playgroundForm.ShowDialog();
+            ShowPlaygroundForm();
         }
     }
 }

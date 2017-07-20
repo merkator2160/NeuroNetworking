@@ -1,15 +1,8 @@
-﻿using AntHillSimulation.Forms;
-using Assets.Icons;
-using Mediator.Net;
-using Mediator.Net.Context;
-using Mediator.Net.Contracts;
-using Microsoft.Practices.Unity;
+﻿using AntHillSimulation.Core.Config;
+using AntHillSimulation.Core.Messenger;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AntHillSimulation.Core.Config;
-using AntHillSimulation.Core.Messenger;
 
 namespace AntHillSimulation.Core
 {
@@ -17,17 +10,17 @@ namespace AntHillSimulation.Core
     {
         private readonly ApplicationConfig _config;
         private readonly INotificator _notificator;
-        private readonly ICommunicationBus _communicationBus;
+        private readonly IMessenger _communicationBus;
         private Boolean _disposed;
         private Thread _workerThread;
 
 
-        public Engine(ApplicationConfig config, INotificator notificator, ICommunicationBus communicationBus)
+        public Engine(ApplicationConfig config, INotificator notificator, IMessenger communicationBus)
         {
             _config = config;
             _notificator = notificator;
             _communicationBus = communicationBus;
-            
+
             _workerThread = new Thread(DoWork);
         }
 
@@ -58,8 +51,8 @@ namespace AntHillSimulation.Core
                 }
             }
         }
-        
-        
+
+
 
         // IDisposable ////////////////////////////////////////////////////////////////////////////
         public void Dispose()

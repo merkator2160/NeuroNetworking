@@ -1,19 +1,16 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using AntHillSimulation.Core.Config;
-using AntHillSimulation.Core.Messenger;
-using AntHillSimulation.Core.Messenger.Enums;
+﻿using AntHillSimulation.Core.Config;
+using AntHillSimulation.Core.Messenger.Messages;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace AntHillSimulation.Core
 {
     internal class ManualController
     {
         private readonly ApplicationConfig _config;
-        private readonly ICommunicationBus _communicationBus;
+        private readonly IMessenger _communicationBus;
 
 
-        public ManualController(ApplicationConfig config, ICommunicationBus communicationBus)
+        public ManualController(ApplicationConfig config, IMessenger communicationBus)
         {
             _config = config;
             _communicationBus = communicationBus;
@@ -23,15 +20,14 @@ namespace AntHillSimulation.Core
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void Initialyze()
         {
-            _communicationBus.Subscribe<KeyEventArgs>(Buses.PlaygroundFormKeyDown.ToString(), OnPlaygroundFormKeyDown);
+            _communicationBus.Register<PlaygroundKeyDownMessage>(this, OnPlaygroundFormKeyDown);
         }
 
 
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
-        private void OnPlaygroundFormKeyDown(String busName, KeyEventArgs data)
+        private void OnPlaygroundFormKeyDown(PlaygroundKeyDownMessage message)
         {
 
-            
         }
     }
 }

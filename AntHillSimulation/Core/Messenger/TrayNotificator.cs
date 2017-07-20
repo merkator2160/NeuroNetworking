@@ -2,8 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 using AntHillSimulation.Core.Config;
-using AntHillSimulation.Core.Messenger.Enums;
+using AntHillSimulation.Core.Messenger.Messages;
 using Assets.Icons;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace AntHillSimulation.Core.Messenger
 {
@@ -11,11 +12,11 @@ namespace AntHillSimulation.Core.Messenger
     {
         private readonly NotifyIcon _trayIcon;
         private readonly ApplicationConfig _config;
-        private readonly ICommunicationBus _communicationBus;
+        private readonly IMessenger _communicationBus;
         private Boolean _disposed;
 
 
-        public TrayNotificator(ICommunicationBus communicationBus, ApplicationConfig config)
+        public TrayNotificator(IMessenger communicationBus, ApplicationConfig config)
         {
             _communicationBus = communicationBus;
             _config = config;
@@ -61,11 +62,11 @@ namespace AntHillSimulation.Core.Messenger
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
         private void TrayIconOnDoubleClick(object sender, EventArgs eventArgs)
         {
-            _communicationBus.Send<Object>(Buses.TrayIconDoubleClick.ToString(), null);
+            _communicationBus.Send<TrayIconClickMessage>(null);
         }
         private void ExitMenuOnClick(object sender, EventArgs eventArgs)
         {
-            _communicationBus.Send<Object>(Buses.TrayMenuExitCLick.ToString(), null);
+            Application.Exit();
         }
 
 
