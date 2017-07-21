@@ -1,6 +1,7 @@
 ﻿using AntHillSimulation.Core.Config;
 using AntHillSimulation.Core.Messenger.Messages;
 using AntHillSimulation.Forms;
+using Assets.Models;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Practices.Unity;
 
@@ -26,7 +27,7 @@ namespace AntHillSimulation.Core
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-        public void ShowPlaygroundForm()
+        public void ShowPlaygroundForm(Dimensions canvasDimensions)
         {
             if (_playgroundForm != null && !_playgroundForm.IsDisposed)
                 return;

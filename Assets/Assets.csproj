@@ -48,6 +48,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Icons.resx</DependentUpon>
     </Compile>
+    <Compile Include="IMapObject.cs" />
+    <Compile Include="Models\Dimensions.cs" />
+    <Compile Include="Models\Map.cs" />
+    <Compile Include="Models\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
