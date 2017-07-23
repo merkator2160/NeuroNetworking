@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCameraViewer", "NeuroNetworking\WebCameraViewer.csproj", "{DB117BE9-7B33-42E3-B5B3-927823B76E18}"
 EndProject
@@ -27,6 +27,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntHillSimulation", "AntHillSimulation\AntHillSimulation.csproj", "{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonSandbox", "PythonSandbox\PythonSandbox.pyproj", "{65C333D1-C232-4BFA-AF59-73D57EF489AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,8 @@ Global
 		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65C333D1-C232-4BFA-AF59-73D57EF489AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65C333D1-C232-4BFA-AF59-73D57EF489AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,5 +72,6 @@ Global
 		{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC} = {7AB61A74-7A67-43D7-9777-7BA7AC4EFEA8}
 		{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813} = {633741A1-E63E-43DB-9019-AA0618A9FAB6}
 		{4CB8C7A5-9418-42D1-9953-4893FE36F8EE} = {7AB61A74-7A67-43D7-9777-7BA7AC4EFEA8}
+		{65C333D1-C232-4BFA-AF59-73D57EF489AD} = {633741A1-E63E-43DB-9019-AA0618A9FAB6}
 	EndGlobalSection
 EndGlobal
