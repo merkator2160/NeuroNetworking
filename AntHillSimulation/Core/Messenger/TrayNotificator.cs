@@ -1,10 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using AntHillSimulation.Core.Config;
+﻿using AntHillSimulation.Core.Config;
 using AntHillSimulation.Core.Messenger.Messages;
 using Assets.Icons;
 using GalaSoft.MvvmLight.Messaging;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace AntHillSimulation.Core.Messenger
 {
@@ -22,7 +22,7 @@ namespace AntHillSimulation.Core.Messenger
             _config = config;
 
             var icon = Icons.ResourceManager.GetObject(config.IconName) as Icon;
-            _trayIcon = new NotifyIcon()
+            _trayIcon = new NotifyIcon
             {
                 Icon = icon,
                 Visible = true,
@@ -46,7 +46,7 @@ namespace AntHillSimulation.Core.Messenger
         {
             _trayIcon.ShowBalloonTip(_config.Tray.BalloonLifetime, _config.Tray.BalloonTitle, message, ToolTipIcon.Error);
         }
-        
+
         private ContextMenu ConfigureMenu()
         {
             var menu = new ContextMenu();

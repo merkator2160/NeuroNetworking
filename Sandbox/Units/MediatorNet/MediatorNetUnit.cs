@@ -1,8 +1,8 @@
-﻿using System;
-using Mediator.Net;
+﻿using Mediator.Net;
 using Mediator.Net.Unity;
 using Microsoft.Practices.Unity;
-using Sandbox.Units.Mediators.Messages;
+using Sandbox.Units.MediatorNet.Messages;
+using System;
 
 namespace Sandbox.Units.MediatorNet
 {
@@ -20,20 +20,20 @@ namespace Sandbox.Units.MediatorNet
             var mediaBuilder = new MediatorBuilder();
             mediaBuilder.RegisterHandlers(typeof(MediatorNetUnit).Assembly);
             UnityExtensioins.Configure(mediaBuilder, container);
-            
+
             return container;
         }
         private static async void RunMediator(IMediator mediator)
         {
-            await mediator.PublishAsync(new EventMessage()
+            await mediator.PublishAsync(new EventMessage
             {
                 Id = Guid.NewGuid()
             });
-            await mediator.SendAsync(new GuidCommand()
+            await mediator.SendAsync(new GuidCommand
             {
                 Id = Guid.NewGuid()
             });
-            var result = await mediator.RequestAsync<GuidRequest, GuidResponse>(new GuidRequest()
+            var result = await mediator.RequestAsync<GuidRequest, GuidResponse>(new GuidRequest
             {
                 Id = Guid.NewGuid().ToString()
             });

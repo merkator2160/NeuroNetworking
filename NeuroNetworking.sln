@@ -47,11 +47,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{14D3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{B1197AF9-5F80-45F8-AAC1-3B8BC884ED4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controls", "AForge\Sources\Controls\Controls.csproj", "{D08F6D8A-A5F5-49C3-B607-526D9EE0DEE3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AForge.Controls", "AForge\Sources\Controls\AForge.Controls.csproj", "{D08F6D8A-A5F5-49C3-B607-526D9EE0DEE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "AForge\Sources\Core\Core.csproj", "{BFAF50DC-4942-46B8-8615-2A0B4CF08AD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AForge.Core", "AForge\Sources\Core\AForge.Core.csproj", "{BFAF50DC-4942-46B8-8615-2A0B4CF08AD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neuro", "AForge\Sources\Neuro\Neuro.csproj", "{53B51230-2CD7-435B-8677-A3E24D134CD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AForge.Neuro", "AForge\Sources\Neuro\AForge.Neuro.csproj", "{53B51230-2CD7-435B-8677-A3E24D134CD8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Back propagation", "Back propagation", "{5AB8B533-FFEF-4523-B3F7-9F08D97BBAE6}"
 EndProject

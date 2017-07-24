@@ -1,5 +1,4 @@
 ﻿using System;
-using AntHillSimulation.Forms;
 
 namespace AntHillSimulation.Core.Config
 {

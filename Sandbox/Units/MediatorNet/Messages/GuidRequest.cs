@@ -1,7 +1,7 @@
-﻿using System;
-using Mediator.Net.Contracts;
+﻿using Mediator.Net.Contracts;
+using System;
 
-namespace Sandbox.Units.Mediators.Messages
+namespace Sandbox.Units.MediatorNet.Messages
 {
     public class GuidRequest : IRequest
     {

@@ -1,38 +1,38 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>AForge</name>
+        <name>AForge.Core</name>
     </assembly>
     <members>
-        <member name="T:AForge.DoubleRange">
+        <member name="T:AForge.Core.DoubleRange">
             <summary>
             Represents a double range with minimum and maximum values
             </summary>
         </member>
-        <member name="P:AForge.DoubleRange.Min">
+        <member name="P:AForge.Core.DoubleRange.Min">
             <summary>
             Minimum value
             </summary>
         </member>
-        <member name="P:AForge.DoubleRange.Max">
+        <member name="P:AForge.Core.DoubleRange.Max">
             <summary>
             Maximum value
             </summary>
         </member>
-        <member name="P:AForge.DoubleRange.Length">
+        <member name="P:AForge.Core.DoubleRange.Length">
             <summary>
             Length of the range (deffirence between maximum and minimum values)
             </summary>
         </member>
-        <member name="M:AForge.DoubleRange.#ctor(System.Double,System.Double)">
+        <member name="M:AForge.Core.DoubleRange.#ctor(System.Double,System.Double)">
             <summary>
-            Initializes a new instance of the <see cref="T:AForge.DoubleRange"/> class
+            Initializes a new instance of the <see cref="T:AForge.Core.DoubleRange"/> class
             </summary>
             
             <param name="min">Minimum value of the range</param>
             <param name="max">Maximum value of the range</param>
         </member>
-        <member name="M:AForge.DoubleRange.IsInside(System.Double)">
+        <member name="M:AForge.Core.DoubleRange.IsInside(System.Double)">
             <summary>
             Check if the specified value is inside this range
             </summary>
@@ -43,7 +43,7 @@
             <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="M:AForge.DoubleRange.IsInside(AForge.DoubleRange)">
+        <member name="M:AForge.Core.DoubleRange.IsInside(AForge.Core.DoubleRange)">
             <summary>
             Check if the specified range is inside this range
             </summary>
@@ -54,7 +54,7 @@
             <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="M:AForge.DoubleRange.IsOverlapping(AForge.DoubleRange)">
+        <member name="M:AForge.Core.DoubleRange.IsOverlapping(AForge.Core.DoubleRange)">
             <summary>
             Check if the specified range overlaps with this range
             </summary>
@@ -65,35 +65,35 @@
             <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="T:AForge.IntRange">
+        <member name="T:AForge.Core.IntRange">
             <summary>
             Represents an integer range with minimum and maximum values
             </summary>
         </member>
-        <member name="P:AForge.IntRange.Min">
+        <member name="P:AForge.Core.IntRange.Min">
             <summary>
             Minimum value
             </summary>
         </member>
-        <member name="P:AForge.IntRange.Max">
+        <member name="P:AForge.Core.IntRange.Max">
             <summary>
             Maximum value
             </summary>
         </member>
-        <member name="P:AForge.IntRange.Length">
+        <member name="P:AForge.Core.IntRange.Length">
             <summary>
             Length of the range (deffirence between maximum and minimum values)
             </summary>
         </member>
-        <member name="M:AForge.IntRange.#ctor(System.Int32,System.Int32)">
+        <member name="M:AForge.Core.IntRange.#ctor(System.Int32,System.Int32)">
             <summary>
-            Initializes a new instance of the <see cref="T:AForge.IntRange"/> class
+            Initializes a new instance of the <see cref="T:AForge.Core.IntRange"/> class
             </summary>
             
             <param name="min">Minimum value of the range</param>
             <param name="max">Maximum value of the range</param>
         </member>
-        <member name="M:AForge.IntRange.IsInside(System.Int32)">
+        <member name="M:AForge.Core.IntRange.IsInside(System.Int32)">
             <summary>
             Check if the specified value is inside this range
             </summary>
@@ -104,7 +104,7 @@
             <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="M:AForge.IntRange.IsInside(AForge.IntRange)">
+        <member name="M:AForge.Core.IntRange.IsInside(AForge.Core.IntRange)">
             <summary>
             Check if the specified range is inside this range
             </summary>
@@ -115,7 +115,7 @@
             <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="M:AForge.IntRange.IsOverlapping(AForge.IntRange)">
+        <member name="M:AForge.Core.IntRange.IsOverlapping(AForge.Core.IntRange)">
             <summary>
             Check if the specified range overlaps with this range
             </summary>
@@ -126,7 +126,7 @@
             <b>false</b> otherwise.</returns>
             
         </member>
-        <member name="T:AForge.PolishExpression">
+        <member name="T:AForge.Core.PolishExpression">
             <summary>
             Evaluator of expressions written in polish notation
             </summary>
@@ -158,12 +158,12 @@
             </example>
             
         </member>
-        <member name="M:AForge.PolishExpression.#ctor">
+        <member name="M:AForge.Core.PolishExpression.#ctor">
             <summary>
             Constructor (the class should not be instantiated at this moment)
             </summary>
         </member>
-        <member name="M:AForge.PolishExpression.Evaluate(System.String,System.Double[])">
+        <member name="M:AForge.Core.PolishExpression.Evaluate(System.String,System.Double[])">
              <summary>
              Evaluates specified expression
              </summary>

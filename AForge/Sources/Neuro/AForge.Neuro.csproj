@@ -4,27 +4,28 @@
     <ProjectType>Local</ProjectType>
     <ProductVersion>7.10.3077</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BFAF50DC-4942-46B8-8615-2A0B4CF08AD2}</ProjectGuid>
+    <ProjectGuid>{53B51230-2CD7-435B-8677-A3E24D134CD8}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ApplicationIcon />
     <AssemblyKeyContainerName />
-    <AssemblyName>AForge</AssemblyName>
+    <AssemblyName>AForge.Neuro</AssemblyName>
     <AssemblyOriginatorKeyFile />
     <DefaultClientScript>JScript</DefaultClientScript>
     <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
-    <RootNamespace>AForge</RootNamespace>
+    <RootNamespace>AForge.Neuro</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject />
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>0.0</OldToolsVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -33,7 +34,7 @@
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile />
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DocumentationFile>AForge.Core.xml</DocumentationFile>
+    <DocumentationFile>AForge.Neuro.xml</DocumentationFile>
     <DebugSymbols>true</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -45,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\Release\</OutputPath>
@@ -53,7 +55,7 @@
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile />
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>AForge.Core.xml</DocumentationFile>
+    <DocumentationFile>AForge.Neuro.xml</DocumentationFile>
     <DebugSymbols>false</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -65,6 +67,7 @@
     <WarningLevel>4</WarningLevel>
     <DebugType>none</DebugType>
     <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System">
@@ -78,20 +81,77 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activation Functions\BipolarSigmoidFunction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Activation Functions\IActivationFunction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Activation Functions\SigmoidFunction.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Activation Functions\ThresholdFunction.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DoubleRange.cs">
+    <Compile Include="Layers\ActivationLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="IntRange.cs">
+    <Compile Include="Layers\DistanceLayer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PolishExpression.cs">
+    <Compile Include="Layers\Layer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Learning\BackPropagationLearning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Learning\DeltaRuleLearning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Learning\ElasticNetworkLearning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Learning\ISupervisedLearning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Learning\IUnsupervisedLearning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Learning\PerceptronLearning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Learning\SOMLearning.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Networks\ActivationNetwork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Networks\DistanceNetwork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Networks\Network.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Neurons\ActivationNeuronBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Neurons\DistanceNeuronBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Neurons\NeuronBase.cs">
       <SubType>Code</SubType>
     </Compile>
     <None Include="Copyright.txt" />
     <None Include="Version.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\AForge.Core.csproj">
+      <Project>{bfaf50dc-4942-46b8-8615-2a0b4cf08ad2}</Project>
+      <Name>AForge.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

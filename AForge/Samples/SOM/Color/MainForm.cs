@@ -1,502 +1,482 @@
-// AForge Framework
-// Color Clustering using Kohonen SOM
-//
-// Copyright © Andrew Kirillov, 2006
-// andrew.kirillov@gmail.com
-//
-
+using AForge.Core;
+using AForge.Neuro.Layers;
+using AForge.Neuro.Learning;
+using AForge.Neuro.Networks;
+using AForge.Neuro.Neurons;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Data;
 using System.Threading;
-
-using AForge;
-using AForge.Neuro;
-using AForge.Neuro.Learning;
+using System.Windows.Forms;
 
 namespace Color
 {
-	/// <summary>
-	/// Summary description for Form1.
-	/// </summary>
-	public class MainForm : System.Windows.Forms.Form
-	{
-		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.Panel mapPanel;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox iterationsBox;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox rateBox;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox radiusBox;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Button startButton;
-		private System.Windows.Forms.Button stopButton;
-		private System.Windows.Forms.Button randomizeButton;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox currentIterationBox;
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
+    public class MainForm : Form
+    {
+        private GroupBox _groupBox1;
+        private Panel _mapPanel;
+        private GroupBox _groupBox2;
+        private Label _label1;
+        private TextBox _iterationsBox;
+        private Label _label2;
+        private TextBox _rateBox;
+        private Label _label3;
+        private TextBox _radiusBox;
+        private Label _label4;
+        private Button _startButton;
+        private Button _stopButton;
+        private Button _randomizeButton;
+        private Label _label5;
+        private TextBox _currentIterationBox;
 
-		private DistanceNetwork	network;
-		private Bitmap			mapBitmap;
-		private Random			rand = new Random();
+        private Container _components = null;
 
-		private int				iterations = 5000;
-		private double			learningRate = 0.1;
-		private double			radius = 15;
+        private DistanceNetwork _network;
+        private Bitmap _mapBitmap;
+        private Random _rand = new Random();
 
-		private Thread	workerThread = null;
-		private bool	needToStop = false;
+        private int _iterations = 5000;
+        private double _learningRate = 0.1;
+        private double _radius = 15;
 
-		// Constructor
-		public MainForm( )
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent( );
+        private Thread _workerThread;
+        private bool _needToStop;
 
-			// Create network
-			network = new DistanceNetwork( 3, 100 * 100 );
+        // Constructor
+        public MainForm()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-			// Create map bitmap
-			mapBitmap = new Bitmap( 200, 200, PixelFormat.Format24bppRgb );
+            // Create network
+            _network = new DistanceNetwork(3, 100 * 100);
 
-			//
-			RandomizeNetwork( );
-			UpdateSettings( );
-		}
+            // Create map bitmap
+            _mapBitmap = new Bitmap(200, 200, PixelFormat.Format24bppRgb);
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if ( components != null ) 
-				{
-					components.Dispose( );
-				}
-			}
-			base.Dispose( disposing );
-		}
+            //
+            RandomizeNetwork();
+            UpdateSettings();
+        }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.randomizeButton = new System.Windows.Forms.Button();
-			this.mapPanel = new BufferedPanel();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.currentIterationBox = new System.Windows.Forms.TextBox();
-			this.label5 = new System.Windows.Forms.Label();
-			this.stopButton = new System.Windows.Forms.Button();
-			this.startButton = new System.Windows.Forms.Button();
-			this.label4 = new System.Windows.Forms.Label();
-			this.radiusBox = new System.Windows.Forms.TextBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.rateBox = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.iterationsBox = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.Controls.AddRange(new System.Windows.Forms.Control[] {
-																					this.randomizeButton,
-																					this.mapPanel});
-			this.groupBox1.Location = new System.Drawing.Point(10, 10);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(222, 265);
-			this.groupBox1.TabIndex = 0;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Map";
-			// 
-			// randomizeButton
-			// 
-			this.randomizeButton.Location = new System.Drawing.Point(10, 230);
-			this.randomizeButton.Name = "randomizeButton";
-			this.randomizeButton.TabIndex = 1;
-			this.randomizeButton.Text = "&Randomize";
-			this.randomizeButton.Click += new System.EventHandler(this.randomizeButton_Click);
-			// 
-			// mapPanel
-			// 
-			this.mapPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.mapPanel.Location = new System.Drawing.Point(10, 20);
-			this.mapPanel.Name = "mapPanel";
-			this.mapPanel.Size = new System.Drawing.Size(202, 202);
-			this.mapPanel.TabIndex = 0;
-			this.mapPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapPanel_Paint);
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.AddRange(new System.Windows.Forms.Control[] {
-																					this.currentIterationBox,
-																					this.label5,
-																					this.stopButton,
-																					this.startButton,
-																					this.label4,
-																					this.radiusBox,
-																					this.label3,
-																					this.rateBox,
-																					this.label2,
-																					this.iterationsBox,
-																					this.label1});
-			this.groupBox2.Location = new System.Drawing.Point(240, 10);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(190, 265);
-			this.groupBox2.TabIndex = 1;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Neural Network";
-			// 
-			// currentIterationBox
-			// 
-			this.currentIterationBox.Location = new System.Drawing.Point(110, 120);
-			this.currentIterationBox.Name = "currentIterationBox";
-			this.currentIterationBox.ReadOnly = true;
-			this.currentIterationBox.Size = new System.Drawing.Size(70, 20);
-			this.currentIterationBox.TabIndex = 10;
-			this.currentIterationBox.Text = "";
-			// 
-			// label5
-			// 
-			this.label5.Location = new System.Drawing.Point(10, 122);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(100, 16);
-			this.label5.TabIndex = 9;
-			this.label5.Text = "Curren iteration:";
-			// 
-			// stopButton
-			// 
-			this.stopButton.Enabled = false;
-			this.stopButton.Location = new System.Drawing.Point(105, 230);
-			this.stopButton.Name = "stopButton";
-			this.stopButton.TabIndex = 8;
-			this.stopButton.Text = "S&top";
-			this.stopButton.Click += new System.EventHandler(this.stopButton_Click);
-			// 
-			// startButton
-			// 
-			this.startButton.Location = new System.Drawing.Point(20, 230);
-			this.startButton.Name = "startButton";
-			this.startButton.TabIndex = 7;
-			this.startButton.Text = "&Start";
-			this.startButton.Click += new System.EventHandler(this.startButton_Click);
-			// 
-			// label4
-			// 
-			this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.label4.Location = new System.Drawing.Point(10, 100);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(170, 2);
-			this.label4.TabIndex = 6;
-			// 
-			// radiusBox
-			// 
-			this.radiusBox.Location = new System.Drawing.Point(110, 70);
-			this.radiusBox.Name = "radiusBox";
-			this.radiusBox.Size = new System.Drawing.Size(70, 20);
-			this.radiusBox.TabIndex = 5;
-			this.radiusBox.Text = "";
-			// 
-			// label3
-			// 
-			this.label3.Location = new System.Drawing.Point(10, 72);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(100, 16);
-			this.label3.TabIndex = 4;
-			this.label3.Text = "Initial radius:";
-			// 
-			// rateBox
-			// 
-			this.rateBox.Location = new System.Drawing.Point(110, 45);
-			this.rateBox.Name = "rateBox";
-			this.rateBox.Size = new System.Drawing.Size(70, 20);
-			this.rateBox.TabIndex = 3;
-			this.rateBox.Text = "";
-			// 
-			// label2
-			// 
-			this.label2.Location = new System.Drawing.Point(10, 47);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(100, 16);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "Initial learning rate:";
-			// 
-			// iterationsBox
-			// 
-			this.iterationsBox.Location = new System.Drawing.Point(110, 20);
-			this.iterationsBox.Name = "iterationsBox";
-			this.iterationsBox.Size = new System.Drawing.Size(70, 20);
-			this.iterationsBox.TabIndex = 1;
-			this.iterationsBox.Text = "";
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(10, 22);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(60, 16);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Iteraions:";
-			// 
-			// MainForm
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(439, 285);
-			this.Controls.AddRange(new System.Windows.Forms.Control[] {
-																		  this.groupBox2,
-																		  this.groupBox1});
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.MaximizeBox = false;
-			this.Name = "MainForm";
-			this.Text = "Color Clustering using Kohonen SOM";
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
-			this.ResumeLayout(false);
 
-		}
-		#endregion
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _components?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main( ) 
-		{
-			Application.Run( new MainForm( ) );
-		}
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            _groupBox1 = new System.Windows.Forms.GroupBox();
+            _randomizeButton = new System.Windows.Forms.Button();
+            _mapPanel = new BufferedPanel();
+            _groupBox2 = new System.Windows.Forms.GroupBox();
+            _currentIterationBox = new System.Windows.Forms.TextBox();
+            _label5 = new System.Windows.Forms.Label();
+            _stopButton = new System.Windows.Forms.Button();
+            _startButton = new System.Windows.Forms.Button();
+            _label4 = new System.Windows.Forms.Label();
+            _radiusBox = new System.Windows.Forms.TextBox();
+            _label3 = new System.Windows.Forms.Label();
+            _rateBox = new System.Windows.Forms.TextBox();
+            _label2 = new System.Windows.Forms.Label();
+            _iterationsBox = new System.Windows.Forms.TextBox();
+            _label1 = new System.Windows.Forms.Label();
+            _groupBox1.SuspendLayout();
+            _groupBox2.SuspendLayout();
+            SuspendLayout();
+            // 
+            // groupBox1
+            // 
+            _groupBox1.Controls.AddRange(new System.Windows.Forms.Control[] {
+                                                                                    _randomizeButton,
+                                                                                    _mapPanel});
+            _groupBox1.Location = new System.Drawing.Point(10, 10);
+            _groupBox1.Name = "_groupBox1";
+            _groupBox1.Size = new System.Drawing.Size(222, 265);
+            _groupBox1.TabIndex = 0;
+            _groupBox1.TabStop = false;
+            _groupBox1.Text = "Map";
+            // 
+            // randomizeButton
+            // 
+            _randomizeButton.Location = new System.Drawing.Point(10, 230);
+            _randomizeButton.Name = "_randomizeButton";
+            _randomizeButton.TabIndex = 1;
+            _randomizeButton.Text = "&RandomizeCurrentNeuron";
+            _randomizeButton.Click += new System.EventHandler(randomizeButton_Click);
+            // 
+            // mapPanel
+            // 
+            _mapPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            _mapPanel.Location = new System.Drawing.Point(10, 20);
+            _mapPanel.Name = "_mapPanel";
+            _mapPanel.Size = new System.Drawing.Size(202, 202);
+            _mapPanel.TabIndex = 0;
+            _mapPanel.Paint += new System.Windows.Forms.PaintEventHandler(mapPanel_Paint);
+            // 
+            // groupBox2
+            // 
+            _groupBox2.Controls.AddRange(new System.Windows.Forms.Control[] {
+                                                                                    _currentIterationBox,
+                                                                                    _label5,
+                                                                                    _stopButton,
+                                                                                    _startButton,
+                                                                                    _label4,
+                                                                                    _radiusBox,
+                                                                                    _label3,
+                                                                                    _rateBox,
+                                                                                    _label2,
+                                                                                    _iterationsBox,
+                                                                                    _label1});
+            _groupBox2.Location = new System.Drawing.Point(240, 10);
+            _groupBox2.Name = "_groupBox2";
+            _groupBox2.Size = new System.Drawing.Size(190, 265);
+            _groupBox2.TabIndex = 1;
+            _groupBox2.TabStop = false;
+            _groupBox2.Text = "Neural Network";
+            // 
+            // currentIterationBox
+            // 
+            _currentIterationBox.Location = new System.Drawing.Point(110, 120);
+            _currentIterationBox.Name = "_currentIterationBox";
+            _currentIterationBox.ReadOnly = true;
+            _currentIterationBox.Size = new System.Drawing.Size(70, 20);
+            _currentIterationBox.TabIndex = 10;
+            _currentIterationBox.Text = "";
+            // 
+            // label5
+            // 
+            _label5.Location = new System.Drawing.Point(10, 122);
+            _label5.Name = "_label5";
+            _label5.Size = new System.Drawing.Size(100, 16);
+            _label5.TabIndex = 9;
+            _label5.Text = "Curren iteration:";
+            // 
+            // stopButton
+            // 
+            _stopButton.Enabled = false;
+            _stopButton.Location = new System.Drawing.Point(105, 230);
+            _stopButton.Name = "_stopButton";
+            _stopButton.TabIndex = 8;
+            _stopButton.Text = "S&top";
+            _stopButton.Click += new System.EventHandler(stopButton_Click);
+            // 
+            // startButton
+            // 
+            _startButton.Location = new System.Drawing.Point(20, 230);
+            _startButton.Name = "_startButton";
+            _startButton.TabIndex = 7;
+            _startButton.Text = "&Start";
+            _startButton.Click += new System.EventHandler(startButton_Click);
+            // 
+            // label4
+            // 
+            _label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            _label4.Location = new System.Drawing.Point(10, 100);
+            _label4.Name = "_label4";
+            _label4.Size = new System.Drawing.Size(170, 2);
+            _label4.TabIndex = 6;
+            // 
+            // radiusBox
+            // 
+            _radiusBox.Location = new System.Drawing.Point(110, 70);
+            _radiusBox.Name = "_radiusBox";
+            _radiusBox.Size = new System.Drawing.Size(70, 20);
+            _radiusBox.TabIndex = 5;
+            _radiusBox.Text = "";
+            // 
+            // label3
+            // 
+            _label3.Location = new System.Drawing.Point(10, 72);
+            _label3.Name = "_label3";
+            _label3.Size = new System.Drawing.Size(100, 16);
+            _label3.TabIndex = 4;
+            _label3.Text = "Initial radius:";
+            // 
+            // rateBox
+            // 
+            _rateBox.Location = new System.Drawing.Point(110, 45);
+            _rateBox.Name = "_rateBox";
+            _rateBox.Size = new System.Drawing.Size(70, 20);
+            _rateBox.TabIndex = 3;
+            _rateBox.Text = "";
+            // 
+            // label2
+            // 
+            _label2.Location = new System.Drawing.Point(10, 47);
+            _label2.Name = "_label2";
+            _label2.Size = new System.Drawing.Size(100, 16);
+            _label2.TabIndex = 2;
+            _label2.Text = "Initial learning rate:";
+            // 
+            // iterationsBox
+            // 
+            _iterationsBox.Location = new System.Drawing.Point(110, 20);
+            _iterationsBox.Name = "_iterationsBox";
+            _iterationsBox.Size = new System.Drawing.Size(70, 20);
+            _iterationsBox.TabIndex = 1;
+            _iterationsBox.Text = "";
+            // 
+            // label1
+            // 
+            _label1.Location = new System.Drawing.Point(10, 22);
+            _label1.Name = "_label1";
+            _label1.Size = new System.Drawing.Size(60, 16);
+            _label1.TabIndex = 0;
+            _label1.Text = "Iteraions:";
+            // 
+            // MainForm
+            // 
+            AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            ClientSize = new System.Drawing.Size(439, 285);
+            Controls.AddRange(new System.Windows.Forms.Control[] {
+                                                                          _groupBox2,
+                                                                          _groupBox1});
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            Name = "MainForm";
+            Text = "Color Clustering using Kohonen SOM";
+            Closing += new System.ComponentModel.CancelEventHandler(MainForm_Closing);
+            _groupBox1.ResumeLayout(false);
+            _groupBox2.ResumeLayout(false);
+            ResumeLayout(false);
 
-		// On main form closing
-		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			// check if worker thread is running
-			if ( ( workerThread != null ) && ( workerThread.IsAlive ) )
-			{
-				needToStop = true;
-				workerThread.Join( );
-			}
-		}
+        }
+        #endregion
 
-		// Update settings controls
-		private void UpdateSettings( )
-		{
-			iterationsBox.Text	= iterations.ToString( );
-			rateBox.Text		= learningRate.ToString( );
-			radiusBox.Text		= radius.ToString( );
-		}
 
-		// On "Rundomize" button clicked
-		private void randomizeButton_Click(object sender, System.EventArgs e)
-		{
-			RandomizeNetwork( );
-		}
+        [STAThread]
+        static void Main()
+        {
+            Application.Run(new MainForm());
+        }
 
-		// Radnomize weights of network
-		private void RandomizeNetwork( )
-		{
-			Neuron.RandRange = new DoubleRange( 0, 255 );
+        // On main form closing
+        private void MainForm_Closing(object sender, CancelEventArgs e)
+        {
+            // check if worker thread is running
+            if ((_workerThread != null) && (_workerThread.IsAlive))
+            {
+                _needToStop = true;
+                _workerThread.Join();
+            }
+        }
 
-			// randomize net
-			network.Randomize( );
+        // Update settings controls
+        private void UpdateSettings()
+        {
+            _iterationsBox.Text = _iterations.ToString();
+            _rateBox.Text = _learningRate.ToString();
+            _radiusBox.Text = _radius.ToString();
+        }
 
-			// update map
-			UpdateMap( );
-		}
+        // On "Rundomize" button clicked
+        private void randomizeButton_Click(object sender, EventArgs e)
+        {
+            RandomizeNetwork();
+        }
 
-		// Update map from network weights
-		private void UpdateMap( )
-		{
-			// lock
-			Monitor.Enter( this );
+        // Radnomize weights of network
+        private void RandomizeNetwork()
+        {
+            NeuronBase.RandRange = new DoubleRange(0, 255);
 
-			// lock bitmap
-			BitmapData mapData = mapBitmap.LockBits( new Rectangle( 0, 0 , 200, 200 ),
-				ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb );
+            // randomize net
+            _network.Randomize();
 
-			int stride = mapData.Stride;
-			int offset = stride - 200 * 3;
-			Layer layer = network[0];
+            // update map
+            UpdateMap();
+        }
 
-			unsafe
-			{
-				byte* ptr = (byte*) mapData.Scan0;
+        // Update map from network weights
+        private void UpdateMap()
+        {
+            // lock
+            Monitor.Enter(this);
 
-				// for all rows
-				for ( int y = 0, i = 0; y < 100; y++ )
-				{
-					// for all pixels
-					for ( int x = 0; x < 100; x++, i++, ptr += 6 )
-					{
-						Neuron neuron = layer[i];
+            // lock bitmap
+            var mapData = _mapBitmap.LockBits(new Rectangle(0, 0, 200, 200),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-						// red
-						ptr[2] = ptr[2 + 3] = ptr[2 + stride] = ptr[2 + 3 + stride]	=
-							(byte) Math.Max( 0, Math.Min( 255, neuron[0] ) );
-						// green
-						ptr[1] = ptr[1 + 3] = ptr[1 + stride] = ptr[1 + 3 + stride]	=
-							(byte) Math.Max( 0, Math.Min( 255, neuron[1] ) );
-						// blue
-						ptr[0] = ptr[0 + 3] = ptr[0 + stride] = ptr[0 + 3 + stride]	=
-							(byte) Math.Max( 0, Math.Min( 255, neuron[2] ) );
-					}
+            var stride = mapData.Stride;
+            var offset = stride - 200 * 3;
+            Layer layer = _network[0];
 
-					ptr += offset;
-					ptr += stride;
-				}
-			}
+            unsafe
+            {
+                var ptr = (byte*)mapData.Scan0;
 
-			// unlock image
-			mapBitmap.UnlockBits( mapData );
+                // for all rows
+                for (int y = 0, i = 0; y < 100; y++)
+                {
+                    // for all pixels
+                    for (var x = 0; x < 100; x++, i++, ptr += 6)
+                    {
+                        var neuronBase = layer[i];
 
-			// unlock
-			Monitor.Exit( this );
+                        // red
+                        ptr[2] = ptr[2 + 3] = ptr[2 + stride] = ptr[2 + 3 + stride] =
+                            (byte)Math.Max(0, Math.Min(255, neuronBase[0]));
+                        // green
+                        ptr[1] = ptr[1 + 3] = ptr[1 + stride] = ptr[1 + 3 + stride] =
+                            (byte)Math.Max(0, Math.Min(255, neuronBase[1]));
+                        // blue
+                        ptr[0] = ptr[0 + 3] = ptr[0 + stride] = ptr[0 + 3 + stride] =
+                            (byte)Math.Max(0, Math.Min(255, neuronBase[2]));
+                    }
 
-			// invalidate maps panel
-			mapPanel.Invalidate( );
-		}
+                    ptr += offset;
+                    ptr += stride;
+                }
+            }
 
-		// Paint map
-		private void mapPanel_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-		{
-			Graphics g = e.Graphics;
+            // unlock image
+            _mapBitmap.UnlockBits(mapData);
 
-			// lock
-			Monitor.Enter( this );
+            // unlock
+            Monitor.Exit(this);
 
-			// drat image
-			g.DrawImage( mapBitmap, 0, 0, 200, 200 );
+            // invalidate maps panel
+            _mapPanel.Invalidate();
+        }
 
-			// unlock
-			Monitor.Exit( this );
-		}
+        // Paint map
+        private void mapPanel_Paint(object sender, PaintEventArgs e)
+        {
+            var g = e.Graphics;
 
-		// Enable/disale controls
-		private void EnableControls( bool enable )
-		{
-			iterationsBox.Enabled	= enable;
-			rateBox.Enabled			= enable;
-			radiusBox.Enabled		= enable;
+            // lock
+            Monitor.Enter(this);
 
-			startButton.Enabled		= enable;
-			randomizeButton.Enabled	= enable;
-			stopButton.Enabled		= !enable;
-		}
+            // drat image
+            g.DrawImage(_mapBitmap, 0, 0, 200, 200);
 
-		// On "Start" button click
-		private void startButton_Click(object sender, System.EventArgs e)
-		{
-			// get iterations count
-			try
-			{
-				iterations = Math.Max( 10, Math.Min( 1000000, int.Parse( iterationsBox.Text ) ) );
-			}
-			catch
-			{
-				iterations = 5000;
-			}
-			// get learning rate
-			try
-			{
-				learningRate = Math.Max( 0.00001, Math.Min( 1.0, double.Parse( rateBox.Text ) ) );
-			}
-			catch
-			{
-				learningRate = 0.1;
-			}
-			// get radius
-			try
-			{
-				radius = Math.Max( 5, Math.Min( 75, int.Parse( radiusBox.Text ) ) );
-			}
-			catch
-			{
-				radius = 15;
-			}
-			// update settings controls
-			UpdateSettings( );
+            // unlock
+            Monitor.Exit(this);
+        }
 
-			// disable all settings controls except "Stop" button
-			EnableControls( false );
+        // Enable/disale controls
+        private void EnableControls(bool enable)
+        {
+            _iterationsBox.Enabled = enable;
+            _rateBox.Enabled = enable;
+            _radiusBox.Enabled = enable;
 
-			// run worker thread
-			needToStop = false;
-			workerThread = new Thread( new ThreadStart( SearchSolution ) );
-			workerThread.Start( );
-		}
+            _startButton.Enabled = enable;
+            _randomizeButton.Enabled = enable;
+            _stopButton.Enabled = !enable;
+        }
 
-		// On "Stop" button click
-		private void stopButton_Click(object sender, System.EventArgs e)
-		{
-			// stop worker thread
-			needToStop = true;
-			workerThread.Join( );
-			workerThread = null;
-		}
+        // On "Start" button click
+        private void startButton_Click(object sender, EventArgs e)
+        {
+            // get iterations count
+            try
+            {
+                _iterations = Math.Max(10, Math.Min(1000000, int.Parse(_iterationsBox.Text)));
+            }
+            catch
+            {
+                _iterations = 5000;
+            }
+            // get learning rate
+            try
+            {
+                _learningRate = Math.Max(0.00001, Math.Min(1.0, double.Parse(_rateBox.Text)));
+            }
+            catch
+            {
+                _learningRate = 0.1;
+            }
+            // get radius
+            try
+            {
+                _radius = Math.Max(5, Math.Min(75, int.Parse(_radiusBox.Text)));
+            }
+            catch
+            {
+                _radius = 15;
+            }
+            // update settings controls
+            UpdateSettings();
 
-		// Worker thread
-		void SearchSolution( )
-		{
-			// create learning algorithm
-			SOMLearning	trainer = new SOMLearning( network );
+            // disable all settings controls except "Stop" button
+            EnableControls(false);
 
-			// input
-			double[] input = new double[3];
+            // run worker thread
+            _needToStop = false;
+            _workerThread = new Thread(SearchSolution);
+            _workerThread.Start();
+        }
 
-			double	fixedLearningRate = learningRate / 10;
-			double	driftingLearningRate = fixedLearningRate * 9;
+        // On "Stop" button click
+        private void stopButton_Click(object sender, EventArgs e)
+        {
+            // stop worker thread
+            _needToStop = true;
+            _workerThread.Join();
+            _workerThread = null;
+        }
 
-			// iterations
-			int i = 0;
+        // Worker thread
+        void SearchSolution()
+        {
+            // create learning algorithm
+            var trainer = new SomLearning(_network);
 
-			// loop
-			while ( !needToStop )
-			{
-				trainer.LearningRate = driftingLearningRate * ( iterations - i ) / iterations + fixedLearningRate;
-				trainer.LearningRadius = (double) radius * ( iterations - i ) / iterations;
+            // input
+            var input = new double[3];
 
-				input[0] = rand.Next( 256 );
-				input[1] = rand.Next( 256 );
-				input[2] = rand.Next( 256 );
+            var fixedLearningRate = _learningRate / 10;
+            var driftingLearningRate = fixedLearningRate * 9;
 
-				trainer.Run( input );
+            // iterations
+            var i = 0;
 
-				// update map once per 50 iterations
-				if ( ( i % 10 ) == 9 )
-				{
-					UpdateMap( );
-				}
+            // loop
+            while (!_needToStop)
+            {
+                trainer.LearningRate = driftingLearningRate * (_iterations - i) / _iterations + fixedLearningRate;
+                trainer.LearningRadius = _radius * (_iterations - i) / _iterations;
 
-				// increase current iteration
-				i++;
+                input[0] = _rand.Next(256);
+                input[1] = _rand.Next(256);
+                input[2] = _rand.Next(256);
 
-				// set current iteration's info
-				currentIterationBox.Text = i.ToString( );
+                trainer.Run(input);
 
-				// stop ?
-				if ( i >= iterations )
-					break;
-			}
+                // update map once per 50 iterations
+                if ((i % 10) == 9)
+                {
+                    UpdateMap();
+                }
 
-			// enable settings controls
-			EnableControls( true );
-		}
-	}
+                // increase current iteration
+                i++;
+
+                // set current iteration's info
+                _currentIterationBox.Text = i.ToString();
+
+                // stop ?
+                if (i >= _iterations)
+                    break;
+            }
+
+            // enable settings controls
+            EnableControls(true);
+        }
+    }
 }

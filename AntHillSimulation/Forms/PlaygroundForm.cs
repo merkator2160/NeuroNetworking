@@ -35,7 +35,7 @@ namespace AntHillSimulation.Forms
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
         private void Playground_KeyDown(object sender, KeyEventArgs e)
         {
-            _communicationBus.Send(new PlaygroundKeyDownMessage()
+            _communicationBus.Send(new PlaygroundKeyDownMessage
             {
                 Args = e
             });

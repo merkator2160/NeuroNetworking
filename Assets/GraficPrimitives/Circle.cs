@@ -17,7 +17,7 @@ namespace Assets.GraficPrimitives
 
         public void CalculatePosition()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 

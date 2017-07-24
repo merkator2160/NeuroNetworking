@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Mediator.Net.Context;
+﻿using Mediator.Net.Context;
 using Mediator.Net.Contracts;
-using Sandbox.Units.Mediators.Messages;
+using Sandbox.Units.MediatorNet.Messages;
+using System;
+using System.Threading.Tasks;
 
-namespace Sandbox.Units.Mediators.Handlers
+namespace Sandbox.Units.MediatorNet.Handlers
 {
     public class EventHandlerOne : IEventHandler<EventMessage>
     {

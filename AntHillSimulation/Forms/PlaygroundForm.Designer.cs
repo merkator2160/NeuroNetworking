@@ -1,11 +1,14 @@
-﻿namespace AntHillSimulation.Forms
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace AntHillSimulation.Forms
 {
     partial class PlaygroundForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -60,6 +63,6 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox Display;
+        private PictureBox Display;
     }
 }

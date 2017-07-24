@@ -1,16 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using Mediator.Net.Context;
+﻿using Mediator.Net.Context;
 using Mediator.Net.Contracts;
-using Sandbox.Units.Mediators.Messages;
+using Sandbox.Units.MediatorNet.Messages;
+using System.Threading.Tasks;
 
-namespace Sandbox.Units.Mediators.Handlers
+namespace Sandbox.Units.MediatorNet.Handlers
 {
     public class RequestHandler : IRequestHandler<GuidRequest, GuidResponse>
     {
         public Task<GuidResponse> Handle(ReceiveContext<GuidRequest> context)
         {
-            return Task.Run(() => new GuidResponse()
+            return Task.Run(() => new GuidResponse
             {
                 ModyfiedId = $"{context.Message.Id} - from response"
             });

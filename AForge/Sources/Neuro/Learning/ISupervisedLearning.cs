@@ -6,9 +6,7 @@
 
 namespace AForge.Neuro.Learning
 {
-	using System;
-
-	/// <summary>
+    /// <summary>
 	/// Supervised learning interface
 	/// </summary>
 	/// 
@@ -20,27 +18,27 @@ namespace AForge.Neuro.Learning
 	/// result after the learning step is complete.</remarks>
 	/// 
 	public interface ISupervisedLearning
-	{
-		/// <summary>
-		/// Runs learning iteration
-		/// </summary>
-		/// 
-		/// <param name="input">input vector</param>
-		/// <param name="output">desired output vector</param>
-		/// 
-		/// <returns>Returns learning error</returns>
-		/// 
-		double Run( double[] input, double[] output );
+    {
+        /// <summary>
+        /// Runs learning iteration
+        /// </summary>
+        /// 
+        /// <param name="input">input vector</param>
+        /// <param name="output">desired output vector</param>
+        /// 
+        /// <returns>Returns learning error</returns>
+        /// 
+        double Run(double[] input, double[] output);
 
-		/// <summary>
-		/// Runs learning epoch
-		/// </summary>
-		/// 
-		/// <param name="input">array of input vectors</param>
-		/// <param name="output">array of output vectors</param>
-		/// 
-		/// <returns>Returns sum of learning errors</returns>
-		/// 
-		double RunEpoch( double[][] input, double[][] output );
-	}
+        /// <summary>
+        /// Runs learning epoch
+        /// </summary>
+        /// 
+        /// <param name="input">array of input vectors</param>
+        /// <param name="output">array of output vectors</param>
+        /// 
+        /// <returns>Returns sum of learning errors</returns>
+        /// 
+        double RunEpoch(double[][] input, double[][] output);
+    }
 }

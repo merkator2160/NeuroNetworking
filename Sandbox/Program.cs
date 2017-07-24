@@ -1,7 +1,5 @@
-﻿using System;
-using Sandbox.Units;
-using Sandbox.Units.Mediators;
-using Sandbox.Units.MvvmLight;
+﻿using Sandbox.Units.MvvmLight;
+using System;
 
 namespace Sandbox
 {

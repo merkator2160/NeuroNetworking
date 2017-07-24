@@ -4,11 +4,12 @@
 // andrew.kirillov@gmail.com
 //
 
-namespace AForge.Neuro
-{
-	using System;
+using AForge.Neuro.Layers;
+using AForge.Neuro.Neurons;
 
-	/// <summary>
+namespace AForge.Neuro.Networks
+{
+    /// <summary>
 	/// Distance network
 	/// </summary>
 	///
@@ -17,63 +18,60 @@ namespace AForge.Neuro
 	/// </remarks>
 	///
 	public class DistanceNetwork : Network
-	{
-		/// <summary>
-		/// Network's layers accessor
-		/// </summary>
-		/// 
-		/// <param name="index">Layer index</param>
-		/// 
-		/// <remarks>Allows to access network's layer.</remarks>
-		/// 
-		public new DistanceLayer this[int index]
-		{
-			get { return ( (DistanceLayer) layers[index] ); }
-		}
+    {
+        /// <summary>
+        /// Network's layers accessor
+        /// </summary>
+        /// 
+        /// <param name="index">Layer index</param>
+        /// 
+        /// <remarks>Allows to access network's layer.</remarks>
+        /// 
+        public new DistanceLayer this[int index] => ((DistanceLayer)Layers[index]);
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="DistanceNetwork"/> class
-		/// </summary>
-		/// 
-		/// <param name="inputsCount">Network's inputs count</param>
-		/// <param name="neuronsCount">Network's neurons count</param>
-		/// 
-		/// <remarks>The new network will be randomized (see <see cref="Neuron.Randomize"/>
-		/// method) after it is created.</remarks>
-		/// 
-		public DistanceNetwork( int inputsCount, int neuronsCount )
-						: base( inputsCount, 1 )
-		{
-			// create layer
-			layers[0] = new DistanceLayer( neuronsCount, inputsCount );
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DistanceNetwork"/> class
+        /// </summary>
+        /// 
+        /// <param name="inputsCount">Network's inputs count</param>
+        /// <param name="neuronsCount">Network's NeuronsBase count</param>
+        /// 
+        /// <remarks>The new network will be randomized (see <see cref="NeuronBase.RandomizeCurrentNeuron"/>
+        /// method) after it is created.</remarks>
+        /// 
+        public DistanceNetwork(int inputsCount, int neuronsCount)
+                        : base(inputsCount, 1)
+        {
+            // create layer
+            Layers[0] = new DistanceLayer(neuronsCount, inputsCount);
+        }
 
-		/// <summary>
-		/// Get winner neuron
-		/// </summary>
-		/// 
-		/// <returns>Index of the winner neuron</returns>
-		/// 
-		/// <remarks>The method returns index of the neuron, which weights have
-		/// the minimum distance from network's input.</remarks>
-		/// 
-		public int GetWinner( )
-		{
-			// find the MIN value
-			double	min = output[0];
-			int		minIndex = 0;
+        /// <summary>
+        /// Get winner neuronBase
+        /// </summary>
+        /// 
+        /// <returns>Index of the winner neuronBase</returns>
+        /// 
+        /// <remarks>The method returns index of the neuronBase, which weights have
+        /// the minimum distance from network's input.</remarks>
+        /// 
+        public int GetWinner()
+        {
+            // find the MIN value
+            var min = output[0];
+            var minIndex = 0;
 
-			for ( int i = 1, n = output.Length; i < n; i++ )
-			{
-				if ( output[i] < min )
-				{
-					// found new MIN value
-					min = output[i];
-					minIndex = i;
-				}
-			}
+            for (int i = 1, n = output.Length; i < n; i++)
+            {
+                if (output[i] < min)
+                {
+                    // found new MIN value
+                    min = output[i];
+                    minIndex = i;
+                }
+            }
 
-			return minIndex;
-		}
-	}
+            return minIndex;
+        }
+    }
 }
