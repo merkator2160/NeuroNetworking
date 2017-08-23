@@ -92,6 +92,7 @@
     <Compile Include="Core\Messenger\Messages\TrayIconClickMessage.cs" />
     <Compile Include="Core\Messenger\TrayNotificator.cs" />
     <Compile Include="Core\PhysicalProcessor.cs" />
+    <Compile Include="Extensions\InvokeExtension.cs" />
     <Compile Include="Forms\PlaygroundForm.cs">
       <SubType>Form</SubType>
     </Compile>
