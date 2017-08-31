@@ -1,5 +1,4 @@
-﻿using Sandbox.Units.MvvmLight;
-using System;
+﻿using System;
 
 namespace Sandbox
 {
@@ -7,7 +6,7 @@ namespace Sandbox
     {
         static void Main(string[] args)
         {
-            MvvmLightMediator.Run();
+            //MvvmLightMediator.Run();
             Console.ReadKey();
         }
     }

@@ -23,6 +23,10 @@ namespace AntHillSimulation.Core
 
             _workerThread = new Thread(DoWork);
         }
+        ~Engine()
+        {
+            Dispose(false);
+        }
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////

@@ -116,23 +116,14 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Units\MediatorNet\Handlers\GuidCommandHandler.cs" />
-    <Compile Include="Units\MediatorNet\Handlers\EventHandlerOne.cs" />
-    <Compile Include="Units\MediatorNet\Handlers\EventHandlerTwo.cs" />
-    <Compile Include="Units\MediatorNet\Handlers\RequestHandler.cs" />
-    <Compile Include="Units\MediatorNet\MediatorNetUnit.cs" />
-    <Compile Include="Units\MediatorNet\Messages\GuidCommand.cs" />
-    <Compile Include="Units\MediatorNet\Messages\EventMessage.cs" />
-    <Compile Include="Units\MediatorNet\Messages\GuidRequest.cs" />
-    <Compile Include="Units\MediatorNet\Messages\GuidResponse.cs" />
-    <Compile Include="Units\MvvmLight\Handler.cs" />
-    <Compile Include="Units\MvvmLight\MvvmLightMediator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Units\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
