@@ -2,11 +2,11 @@
 using System.IO.Ports;
 using System.Threading;
 
-namespace BasicArduinoCommunications
+namespace ComListener
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(String[] args)
         {
             var avaliblePorts = SerialPort.GetPortNames();
             using (var port = new SerialPort(avaliblePorts[0], 9600))
@@ -23,8 +23,9 @@ namespace BasicArduinoCommunications
         }
         private static void PortOnDataReceived(Object sender, SerialDataReceivedEventArgs serialDataReceivedEventArgs)
         {
-            Console.Clear();
-            Console.WriteLine(((SerialPort)sender).ReadLine());
+            var serialPort = (SerialPort)sender;
+            var message = serialPort.ReadLine();
+            Console.WriteLine($"{serialPort.PortName}: {message}");
         }
 
 

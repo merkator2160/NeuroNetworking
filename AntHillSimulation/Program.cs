@@ -1,12 +1,4 @@
-﻿using AntHillSimulation.Core;
-using AntHillSimulation.Core.Config;
-using AntHillSimulation.Core.Messenger;
-using AntHillSimulation.Forms;
-using GalaSoft.MvvmLight.Messaging;
-using Microsoft.Practices.Unity;
-using Newtonsoft.Json;
-using System;
-using System.IO;
+﻿using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -16,10 +8,6 @@ namespace AntHillSimulation
 {
     static class Program
     {
-        private static IUnityContainer _container;
-        private static ApplicationConfig _config;
-
-
         [STAThread]
         static void Main()
         {
@@ -27,17 +15,13 @@ namespace AntHillSimulation
             Application.SetCompatibleTextRenderingDefault(false);
 
             if (CheckAnyOtherInstances())
-            {
-                _config = GetConfig();
-                _container = ConfigureContainer(_config);
+                return;
 
-                _container.Resolve<Engine>().Run();
-
-                _container.Resolve<FormsManager>().ShowPlaygroundForm();
-
-                Application.ApplicationExit += OnApplicationExit;
-                Application.Run();
-            }
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+            Application.ThreadException += ApplicationOnThreadException;
+            Application.ApplicationExit += OnApplicationExit;
+            Application.Run(new SimulatorContext());
         }
         private static Boolean CheckAnyOtherInstances()
         {
@@ -46,46 +30,25 @@ namespace AntHillSimulation
             Boolean created;
             var mutexObj = new Mutex(true, guid, out created);
             if (!created)
-            {
-                MessageBox.Show("Application instance already exist");
-            }
-            return created;
-        }
-        private static ApplicationConfig GetConfig()
-        {
-            var configFilePath = $"{Environment.CurrentDirectory}//ApplicationConfig.json";
-            using (var fileStream = new FileStream(configFilePath, FileMode.Open))
-            {
-                var serializer = new JsonSerializer();
-                using (var streamReader = new StreamReader(fileStream))
-                {
-                    using (var jsonTextReader = new JsonTextReader(streamReader))
-                    {
-                        return serializer.Deserialize<ApplicationConfig>(jsonTextReader);
-                    }
-                }
-            }
-        }
-        private static IUnityContainer ConfigureContainer(ApplicationConfig config)
-        {
-            var container = new UnityContainer();
-            container.RegisterInstance(config);
+                return true;
 
-            container.RegisterType<IMessenger, Messenger>(new ContainerControlledLifetimeManager());
-            container.RegisterType<Engine>(new ContainerControlledLifetimeManager());
-            container.RegisterType<INotificator, TrayNotificator>(new ContainerControlledLifetimeManager());
-            container.RegisterType<FormsManager>(new ContainerControlledLifetimeManager());
-            container.RegisterType<PlaygroundForm>();
-            container.RegisterType<SecondForm>();
-
-            return container;
+            return false;
         }
 
 
-        // EVENTS /////////////////////////////////////////////////////////////////////////////////
+
+        // HANDLERS /////////////////////////////////////////////////////////////////////////////////
         private static void OnApplicationExit(object sender, EventArgs eventArgs)
         {
-            _container?.Dispose();
+
+        }
+        private static void CurrentDomainOnUnhandledException(Object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
+        {
+
+        }
+        private static void ApplicationOnThreadException(Object sender, ThreadExceptionEventArgs threadExceptionEventArgs)
+        {
+
         }
     }
 }

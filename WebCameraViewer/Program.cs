@@ -13,7 +13,7 @@ namespace WebCameraViewer
         [STAThread]
         static void Main()
         {
-            if (CheckOtherInstances())
+            if (CheckAnyOtherInstances())
                 return;
 
             Application.EnableVisualStyles();
@@ -22,7 +22,7 @@ namespace WebCameraViewer
             using (var viewerForm = new ImageViewer())
             {
                 viewerForm.Text = "Web camera view";
-                var capture = new Capture(1);
+                var capture = new Capture(0);
                 Application.Idle += (sender, e) =>
                 {
                     viewerForm.Image = capture.QueryFrame();
@@ -30,12 +30,16 @@ namespace WebCameraViewer
                 viewerForm.ShowDialog();
             }
         }
-        private static Boolean CheckOtherInstances()
+        private static Boolean CheckAnyOtherInstances()
         {
-            Boolean existed;
             var guid = Marshal.GetTypeLibGuidForAssembly(Assembly.GetExecutingAssembly()).ToString();
-            var globalMutex = new Mutex(true, guid, out existed);
-            return existed;
+
+            Boolean created;
+            var mutexObj = new Mutex(true, guid, out created);
+            if (!created)
+                return true;
+
+            return false;
         }
     }
 }

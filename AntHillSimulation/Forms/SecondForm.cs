@@ -19,7 +19,7 @@ namespace AntHillSimulation.Forms
             _config = config;
             _communicationBus = communicationBus;
 
-            Text = $"{config.Name} - Second form";
+            Text = $"{config.AppName} - Second form";
             Icon = Icons.ResourceManager.GetObject(config.IconName) as Icon;
         }
     }

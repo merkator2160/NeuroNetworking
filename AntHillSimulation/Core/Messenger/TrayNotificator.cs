@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace AntHillSimulation.Core.Messenger
 {
-    internal class TrayNotificator : IDisposable, INotificator
+    internal class TrayNotificator : IDisposable, ITrayNotificator
     {
         private readonly NotifyIcon _trayIcon;
         private readonly ApplicationConfig _config;
@@ -30,10 +30,6 @@ namespace AntHillSimulation.Core.Messenger
                 ContextMenu = ConfigureMenu()
             };
             _trayIcon.DoubleClick += TrayIconOnDoubleClick;
-        }
-        ~TrayNotificator()
-        {
-            Dispose(false);
         }
 
 
@@ -73,30 +69,15 @@ namespace AntHillSimulation.Core.Messenger
         // IDisposable ////////////////////////////////////////////////////////////////////////////
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(Boolean disposing)
-        {
             if (!_disposed)
             {
-                ReleaseUnmanagedResources();
-                if (disposing)
-                    ReleaseManagedResources();
-
                 _disposed = true;
-            }
-        }
-        private void ReleaseUnmanagedResources()
-        {
-            // We didn't have its yet.
-        }
-        private void ReleaseManagedResources()
-        {
-            if (_trayIcon != null)
-            {
-                _trayIcon.Visible = false;
-                _trayIcon.Dispose();
+
+                if (_trayIcon != null)
+                {
+                    _trayIcon.Visible = false;
+                    _trayIcon.Dispose();
+                }
             }
         }
     }

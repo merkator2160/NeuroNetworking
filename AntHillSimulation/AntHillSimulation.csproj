@@ -84,10 +84,9 @@
   <ItemGroup>
     <Compile Include="Core\Config\ApplicationConfig.cs" />
     <Compile Include="Core\Engine.cs" />
-    <Compile Include="Core\FormsManager.cs" />
     <Compile Include="Core\ImageRenderer.cs" />
     <Compile Include="Core\ManualController.cs" />
-    <Compile Include="Core\Messenger\INotificator.cs" />
+    <Compile Include="Core\Messenger\ITrayNotificator.cs" />
     <Compile Include="Core\Messenger\Messages\PlaygroundKeyDownMessage.cs" />
     <Compile Include="Core\Messenger\Messages\TrayIconClickMessage.cs" />
     <Compile Include="Core\Messenger\TrayNotificator.cs" />
@@ -110,6 +109,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimulatorContext.cs" />
     <EmbeddedResource Include="Forms\PlaygroundForm.resx">
       <DependentUpon>PlaygroundForm.cs</DependentUpon>
     </EmbeddedResource>

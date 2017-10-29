@@ -2,7 +2,7 @@
 
 namespace AntHillSimulation.Core.Messenger
 {
-    public interface INotificator
+    public interface ITrayNotificator
     {
         void ShowMessage(String message);
         void ShowError(String message);

@@ -9,79 +9,48 @@ namespace AntHillSimulation.Core
     internal class Engine : IDisposable
     {
         private readonly ApplicationConfig _config;
-        private readonly INotificator _notificator;
-        private readonly IMessenger _communicationBus;
+        private readonly ITrayNotificator _notificator;
+        private readonly IMessenger _messanger;
         private Boolean _disposed;
-        private Thread _workerThread;
 
 
-        public Engine(ApplicationConfig config, INotificator notificator, IMessenger communicationBus)
+        public Engine(ApplicationConfig config, ITrayNotificator notificator, IMessenger communicationBus)
         {
             _config = config;
             _notificator = notificator;
-            _communicationBus = communicationBus;
-
-            _workerThread = new Thread(DoWork);
-        }
-        ~Engine()
-        {
-            Dispose(false);
+            _messanger = communicationBus;
         }
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void Run()
         {
-            _workerThread?.Start();
+            ThreadPool.QueueUserWorkItem(DoWork);
         }
-        private void DoWork()
+        private void DoWork(Object state)
         {
-            while (true)
+            while (!_disposed)
             {
                 try
                 {
                     Thread.Sleep(_config.Engine.SimulationSpeed);
                 }
-                catch (ThreadAbortException)
-                {
-
-                }
                 catch (Exception ex)
                 {
                     _notificator.ShowError(ex.Message);
-#if DEBUG
                     throw;
-#endif
                 }
             }
         }
-
 
 
         // IDisposable ////////////////////////////////////////////////////////////////////////////
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        protected virtual void Dispose(Boolean disposing)
-        {
             if (!_disposed)
             {
-                ReleaseUnmanagedResources();
-                if (disposing)
-                    ReleaseManagedResources();
-
                 _disposed = true;
             }
-        }
-        private void ReleaseUnmanagedResources()
-        {
-            // We didn't have its yet.
-        }
-        private void ReleaseManagedResources()
-        {
-            _workerThread?.Abort();
         }
     }
 }

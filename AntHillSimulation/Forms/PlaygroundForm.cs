@@ -11,7 +11,7 @@ namespace AntHillSimulation.Forms
     internal partial class PlaygroundForm : Form
     {
         private readonly ApplicationConfig _config;
-        private readonly IMessenger _communicationBus;
+        private readonly IMessenger _messanger;
 
 
         public PlaygroundForm(ApplicationConfig config, IMessenger communicationBus)
@@ -19,11 +19,11 @@ namespace AntHillSimulation.Forms
             InitializeComponent();
 
             _config = config;
-            _communicationBus = communicationBus;
+            _messanger = communicationBus;
 
             Renderer = new ImageRenderer(Display);
 
-            Text = $"{config.Name} - Playground";
+            Text = $"{_config.AppName} - Playground";
             Icon = Icons.ResourceManager.GetObject(config.IconName) as Icon;
         }
 
@@ -35,7 +35,7 @@ namespace AntHillSimulation.Forms
         // EVENTS /////////////////////////////////////////////////////////////////////////////////
         private void Playground_KeyDown(object sender, KeyEventArgs e)
         {
-            _communicationBus.Send(new PlaygroundKeyDownMessage
+            _messanger.Send(new PlaygroundKeyDownMessage
             {
                 Args = e
             });

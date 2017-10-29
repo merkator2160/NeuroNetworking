@@ -4,7 +4,7 @@ namespace AntHillSimulation.Core.Config
 {
     internal class ApplicationConfig
     {
-        public String Name { get; set; }
+        public String AppName { get; set; }
         public String IconName { get; set; }
 
 
