@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1B71C659-93F8-4855-B9E7-75C122873934}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ClockInitialyzer</RootNamespace>
-    <AssemblyName>ClockInitialyzer</AssemblyName>
+    <RootNamespace>Clock.Programmer</RootNamespace>
+    <AssemblyName>Clock.Programmer</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\PosixDateTime.cs" />
+    <Compile Include="Models\Enums\Command.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

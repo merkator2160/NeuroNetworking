@@ -78,5 +78,8 @@ typedef void *__builtin_va_list;
 #define pgm_read_ptr(address_short)   short()
 
 #include "Clock.ino"
+#include "Command.ino"
+#include "CommandProcessor.ino"
+#include "Display.ino"
 #endif
 #endif
