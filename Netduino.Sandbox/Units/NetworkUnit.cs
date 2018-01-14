@@ -1,7 +1,6 @@
 ﻿using Microsoft.SPOT;
-using System;
-using System.IO;
-using System.Net;
+using Microsoft.SPOT.Net.NetworkInformation;
+using Netduino.Common.Helpers;
 using System.Threading;
 
 namespace Netduino.Sandbox.Units
@@ -10,38 +9,14 @@ namespace Netduino.Sandbox.Units
     {
         public static void Run()
         {
-            new App().Run();
-
-
-            try
+            var interfaces = NetworkInterface.GetAllNetworkInterfaces();
+            if (NetworkHelper.TryObtainIpAddress(interfaces[0]))
             {
-                var responseStr = MakeWebRequest("http://google.com");
-                Debug.Print(responseStr);
+                var responce = NetworkHelper.MakeWebRequest("http://google.com");
+                Debug.Print(responce);
             }
-            catch (Exception ex)
-            {
-                Debug.Print(ex.Message);
-            }
-
-
 
             Thread.Sleep(10000);
-        }
-
-
-        // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-        private static String MakeWebRequest(String url)
-        {
-            using (var httpWebRequest = WebRequest.Create(url))
-            {
-                using (var httpResponse = httpWebRequest.GetResponse())
-                {
-                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                    {
-                        return streamReader.ReadToEnd();
-                    }
-                }
-            }
         }
     }
 }
