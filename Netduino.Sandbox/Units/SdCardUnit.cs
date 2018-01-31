@@ -1,6 +1,7 @@
 ﻿using Microsoft.SPOT;
 using Microsoft.SPOT.IO;
 using System;
+using System.IO;
 using System.Text;
 
 namespace Netduino.Sandbox.Units
@@ -9,12 +10,20 @@ namespace Netduino.Sandbox.Units
     {
         public static void Run()
         {
-            Debug.Print(OutputSdInfo());
+            var volume = new VolumeInfo("SD");
+            var infoStr = GetOutputSdInfo(volume);
+
+            Debug.Print(infoStr);
+
+
+            var path = Path.Combine("SD", "test.txt");
+            File.WriteAllBytes(path, Encoding.UTF8.GetBytes(infoStr));
+
+            volume.FlushAll();
         }
-        public static String OutputSdInfo()
+        private static String GetOutputSdInfo(VolumeInfo vInfo)
         {
             var stringBuilder = new StringBuilder();
-            var vInfo = new VolumeInfo("SD");
 
             stringBuilder.AppendLine("Is Formatted: " + vInfo.IsFormatted);
             stringBuilder.AppendLine("Total Free Space: " + vInfo.TotalFreeSpace);

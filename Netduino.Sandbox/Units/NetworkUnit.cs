@@ -16,7 +16,7 @@ namespace Netduino.Sandbox.Units
                 Debug.Print(responce);
             }
 
-            Thread.Sleep(10000);
+            Thread.Sleep(Timeout.Infinite);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Netduino.Sandbox
     {
         public static void Main()
         {
-            NetworkUnit.Run();
+            ServoUnit.Run();
         }
     }
 }
