@@ -5,12 +5,12 @@ using System.Threading;
 
 namespace Netduino.Sandbox.Units.StepEngineDir
 {
-    public class StepEngine : IDisposable
+    public class Stepper : IDisposable
     {
         private readonly OutputPort[] _stepEngineStatePorts;
 
 
-        public StepEngine(Cpu.Pin pin0, Cpu.Pin pin1, Cpu.Pin pin2, Cpu.Pin pin3)
+        public Stepper(Cpu.Pin pin0, Cpu.Pin pin1, Cpu.Pin pin2, Cpu.Pin pin3)
         {
             _stepEngineStatePorts = new[]
             {
@@ -26,12 +26,12 @@ namespace Netduino.Sandbox.Units.StepEngineDir
         /// <summary>
         /// Number of steps per cycle. Full step mode
         /// </summary>
-        public const Int32 SinglePrecisione = 2048;
+        public const Int32 StepsPerRevolutionSinglePrecisione = 2048;
 
         /// <summary>
         /// Number of steps per cycle. Half step mode
         /// </summary>
-        public const Int32 DoublePrecisione = 4096;
+        public const Int32 StepsPerRevolutionDoublePrecisione = 4096;
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
@@ -46,15 +46,15 @@ namespace Netduino.Sandbox.Units.StepEngineDir
         {
             if (direction == Direction.Forward)
             {
-                ShiftForward(_stepEngineStatePorts);
+                MakeOneStepForward(_stepEngineStatePorts);
             }
             else
             {
-                ShiftBackward(_stepEngineStatePorts);
+                MakeOneStepBackward(_stepEngineStatePorts);
             }
             Thread.Sleep(stepDelay);
         }
-        private static void ShiftForward(OutputPort[] shiftPorts)
+        private static void MakeOneStepForward(OutputPort[] shiftPorts)
         {
             var lastBit = shiftPorts[shiftPorts.Length - 1].Read();
             for (var i = shiftPorts.Length - 1; i > 0; i--)
@@ -63,7 +63,7 @@ namespace Netduino.Sandbox.Units.StepEngineDir
             }
             shiftPorts[0].Write(lastBit);
         }
-        private static void ShiftBackward(OutputPort[] shiftPorts)
+        private static void MakeOneStepBackward(OutputPort[] shiftPorts)
         {
             var firstBit = shiftPorts[0].Read();
             for (var i = 0; i < shiftPorts.Length - 1; i++)

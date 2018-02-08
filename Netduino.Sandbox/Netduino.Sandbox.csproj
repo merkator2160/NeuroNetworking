@@ -45,7 +45,7 @@
     <Compile Include="Units\SdCardUnit.cs" />
     <Compile Include="Units\ServoUnit.cs" />
     <Compile Include="Units\StepEngineDir\Enums\Direction.cs" />
-    <Compile Include="Units\StepEngineDir\StepEngine.cs" />
+    <Compile Include="Units\StepEngineDir\Stepper.cs" />
     <Compile Include="Units\StepEngineDir\StepEngineUnit.cs" />
   </ItemGroup>
   <ItemGroup>

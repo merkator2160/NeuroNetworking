@@ -8,13 +8,13 @@ namespace Netduino.Sandbox.Units.StepEngineDir
     {
         public static void Run()
         {
-            using (var stepEngine = new StepEngine(Pins.GPIO_PIN_D0, Pins.GPIO_PIN_D1, Pins.GPIO_PIN_D2, Pins.GPIO_PIN_D3))
+            using (var stepEngine = new Stepper(Pins.GPIO_PIN_D0, Pins.GPIO_PIN_D1, Pins.GPIO_PIN_D2, Pins.GPIO_PIN_D3))
             {
                 while (true)
                 {
-                    stepEngine.Move(Direction.Forward, StepEngine.SinglePrecisione, 2);
+                    stepEngine.Move(Direction.Forward, Stepper.StepsPerRevolutionSinglePrecisione, 2);
                     Thread.Sleep(2000);
-                    stepEngine.Move(Direction.Backward, StepEngine.SinglePrecisione, 2);
+                    stepEngine.Move(Direction.Backward, Stepper.StepsPerRevolutionSinglePrecisione, 2);
                     Thread.Sleep(2000);
                 }
             }
