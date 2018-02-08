@@ -44,6 +44,9 @@
     <Compile Include="Units\PwmLedUnit.cs" />
     <Compile Include="Units\SdCardUnit.cs" />
     <Compile Include="Units\ServoUnit.cs" />
+    <Compile Include="Units\StepEngineDir\Enums\Direction.cs" />
+    <Compile Include="Units\StepEngineDir\StepEngine.cs" />
+    <Compile Include="Units\StepEngineDir\StepEngineUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Graphics" />

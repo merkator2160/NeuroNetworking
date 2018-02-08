@@ -1,4 +1,4 @@
-using Netduino.Sandbox.Units;
+using Netduino.Sandbox.Units.StepEngineDir;
 
 namespace Netduino.Sandbox
 {
@@ -6,7 +6,7 @@ namespace Netduino.Sandbox
     {
         public static void Main()
         {
-            ServoUnit.Run();
+            StepEngineUnit.Run();
         }
     }
 }
