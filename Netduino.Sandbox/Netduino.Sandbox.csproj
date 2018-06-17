@@ -43,6 +43,7 @@
     <Compile Include="Units\NetworkUnit.cs" />
     <Compile Include="Units\PwmLedUnit.cs" />
     <Compile Include="Units\SdCardUnit.cs" />
+    <Compile Include="Units\SerialPortUnit.cs" />
     <Compile Include="Units\ServoUnit.cs" />
     <Compile Include="Units\StepEngineDir\Enums\Direction.cs" />
     <Compile Include="Units\StepEngineDir\Stepper.cs" />
