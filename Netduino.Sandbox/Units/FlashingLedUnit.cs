@@ -1,5 +1,6 @@
 ﻿using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
+using System;
 using System.Threading;
 
 namespace Netduino.Sandbox.Units
@@ -13,7 +14,7 @@ namespace Netduino.Sandbox.Units
 
             // note that if we didn't have the SecretLabs.NETMF.Hardware.Netduino DLL, we could also manually access it this way:
             //OutputPort led = new OutputPort(Cpu.Pin.GPIO_Pin10, false); 
-            int i = 0;
+            Int32 i = 0;
             while (true)
             {
                 led.Write(true);

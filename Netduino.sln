@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Sandbox", "Netduin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Common", "Netduino.Common\Netduino.Common.csproj", "{88E368FD-970F-4A08-A7C6-B8B57C0DCAAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.ToyCar", "Netduino.ToyCar\Netduino.ToyCar.csproj", "{9AE336EF-D625-40F9-B05F-1CBEB4269C88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,12 @@ Global
 		{88E368FD-970F-4A08-A7C6-B8B57C0DCAAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88E368FD-970F-4A08-A7C6-B8B57C0DCAAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88E368FD-970F-4A08-A7C6-B8B57C0DCAAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE336EF-D625-40F9-B05F-1CBEB4269C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AE336EF-D625-40F9-B05F-1CBEB4269C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AE336EF-D625-40F9-B05F-1CBEB4269C88}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9AE336EF-D625-40F9-B05F-1CBEB4269C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AE336EF-D625-40F9-B05F-1CBEB4269C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AE336EF-D625-40F9-B05F-1CBEB4269C88}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
