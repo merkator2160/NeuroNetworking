@@ -1,8 +1,9 @@
-#include <Streaming.h>
+#include "Streaming.h"
 
 void setup()
 {
   Serial.begin(9600);
+
   int lettera = 'A';
   int month = 4, day = 17, year = 2009;
   
@@ -17,6 +18,7 @@ void setup()
   Serial << "You can use modifiers too, for example:" << endl;
   Serial << _BYTE(lettera) << " is " << _HEX(lettera) << " in hex. " << endl;
 }
-
 void loop()
-{}
+{
+
+}
