@@ -9,13 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game learning", "Game learn
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Other", "Other", "{633741A1-E63E-43DB-9019-AA0618A9FAB6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Items", "Items", "{D7FA479B-2979-4FE2-B1A4-CED5B194D445}"
-	ProjectSection(SolutionItems) = preProject
-		.gitattributes = .gitattributes
-		.gitignore = .gitignore
-		clean-with-scc.bat = clean-with-scc.bat
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assets", "Assets\Assets.csproj", "{54D9A3D9-1BBC-4EEE-986C-DBAF5A6CD3CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{7969E6B0-FAA9-4F8F-9B23-2B1DCA7D4813}"
@@ -27,6 +20,14 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PythonSandbox", "PythonSandbox\PythonSandbox.pyproj", "{65C333D1-C232-4BFA-AF59-73D57EF489AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComListener", "ComListener\ComListener.csproj", "{331B7D2B-F663-422C-AF93-1565305F4930}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{D3C3F363-9359-4C2A-85D4-6E02CF7182B4}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		clean-with-scc.bat = clean-with-scc.bat
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
